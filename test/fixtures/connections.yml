@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  token: MyString
+  ipaddr: MyString
+  access_mac: MyString
+  access_node_mac: MyString
+  used_on: 2014-03-03 21:20:26
+  expired_on: 2014-03-03 21:20:26
+  mac: MyString
+  income_bytes: 1
+  outgoing: 1
+
+two:
+  token: MyString
+  ipaddr: MyString
+  access_mac: MyString
+  access_node_mac: MyString
+  used_on: 2014-03-03 21:20:26
+  expired_on: 2014-03-03 21:20:26
+  mac: MyString
+  income_bytes: 1
+  outgoing: 1

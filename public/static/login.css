@@ -1,0 +1,37 @@
+
+body,h1,h2,p,form,button,input,img,iframe{margin:0;padding:0;border:0;}
+body{color:#333;background-color:#cccccc;text-align:center;font-family:'Î¢ÈíÑÅºÚ',Arial,Helvetica,sans-serif;}
+a{text-decoration:none;outline-style:none;font-size:100%;color:#36c;}
+h2{margin:10px;font-size:18px;font-weight:bold;text-align:center;color:#555555;}
+input{font-size:16px}
+#j,.hided{margin:0;padding:0;width:0;height:0;overflow:hidden}
+.agree{height:20px;line-height:20px;font-size:20px;padding-left:10px;margin:5px 0 16px 0;overflow:hidden;color:#666;}
+.ckbox{width:20px;height:20px;vertical-align:middle;}
+.main{width:480px;height:auto;overflow:hidden;margin:0 auto; background:#fff;}
+.ck0,.ck1,.inp_bg,.loginOn,.loginOff,.logOut{background:url(./static/buttons.png) no-repeat;}
+.ck0,.ck1{width:16px;height:16px;padding:2px;float:left;}
+.ck0{background-position:-124px -36px;}
+.ck1{background-position:-124px -56px;}
+.loginOn,.loginOff,.logOut{width:80px;height:36px;cursor:pointer;}
+.loginOn{background-position:0 -72px;}
+.logOut{background-position:0 -108px;}
+.gg{width:480px;height:268px;overflow:hidden;}
+.title{ width:430px; height:90px; margin:10px auto; text-align:center; font-size:33px; color:#77787a; }
+.title a{ color:#0074bf; text-decoration:none;}
+.outer_box{width:458px;height:240px;overflow:hidden;margin:0 11px 6px 11px;}
+.login_box{width:440px;height:150px;overflow:hidden;margin:10px auto 0 auto;padding-bottom:10px;text-align:left;}
+.iline{width:420px;height:36px;font-size:20px;line-height:36px;overflow:hidden;margin:10px auto;clear:both;}
+.iline span{float:left;display:inline-block;}
+.span1{width:110px;text-align:right;}
+.span2{width:143px;margin-right:10px}
+.inp_bg{border:0;width:127px;height:20px;font-size:20px;padding:8px;}
+#countDown{color:#666;}
+.iline b{font-weight:normal;}
+.loading0,.loading{width:32px;height:32px;margin:2px 10px}
+.hint{width:440px;height:16px;line-height:16px;overflow:hidden;text-align:center;margin-top:10px;padding:2px 0;color:#666;font-size:16px;}
+.loginOK{font-size:20px;lineheight:30px;margin-top:30px;text-align:center;}
+.txt_view{width:420px;margin:0 auto;font-size:16px;line-height:26px;text-align:left;color:#666;}
+.txt_view p{text-indent:2em;margin-top:5px;}
+.txt_content{width:420px;height:110px;overflow:auto;}
+.footer{font-size:12px;height:21px;color:#ffffff;line-height:21px;padding:0 10px;text-align:left;}
+.footer a{color:#ffffff}

@@ -1,0 +1,33 @@
+<%= form_for(@access_node) do |f| %>
+  <% if @access_node.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@access_node.errors.count, "error") %> prohibited this access_node from being saved:</h2>
+
+      <ul>
+      <% @access_node.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :mac %><br />
+    <%= f.text_field :mac %>
+  </div>
+  <div class="field">
+    <%= f.label :redirect_url %><br />
+    <%= f.text_field :redirect_url %>
+  </div>
+  <div class="field">
+    <%= f.label :portal_url %><br />
+    <%= f.text_field :portal_url %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

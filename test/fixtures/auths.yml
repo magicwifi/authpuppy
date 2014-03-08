@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  auth_type: MyString
+  auth_device: false
+  access_node_id: 1
+
+two:
+  auth_type: MyString
+  auth_device: false
+  access_node_id: 1

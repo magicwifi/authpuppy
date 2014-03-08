@@ -1,0 +1,133 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0051)http://61.160.137.138/guest/wx-telecom-4g-bus-1.php -->
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=480px, user-scalable=no">
+<title>ChinaNet-4G无线网络</title>
+<link rel="stylesheet" href="../static/login.css" />
+<body screen_capture_injected="true">
+<div class="main">
+	<div class="gg"><img src="../static/top.jpg"></div>
+    <div class="title">免费接入<a href="">ChinaNet-4G</a>网络极速上网冲浪</div>
+	<div class="outer_box">
+		<div class="login_box" id="login_box">
+            <form method="post" action="https://61.160.137.138/guest/wx-telecom-4g-bus-1.php" name="getPass" target="j">
+				<input type="hidden" name="expire_after" value="1">
+				<input type="hidden" name="role_id" value="142">
+				<input type="hidden" name="auto_update_account" value="1">
+				<input type="hidden" name="create_time" value="">
+				<input type="hidden" name="remote_addr" value="">
+				<input type="hidden" name="creator_accept_terms" value="true">
+				<p class="hided"><input type="checkbox" id="declaration" checked="" onclick="return agree();"></p>
+				<p class="agree"><img id="checkPic" src="../static/blank.gif" class="ck1" onclick="return agree();"><label for="declaration">&nbsp;我已阅读并同意免责声明</label></p>
+				<p class="iline">
+					<span class="span1" id="mobilenum">登录名：</span>
+					<span class="span2"><input name="username" type="text" class="inp_bg" value=""></span>
+					<span id="getPassBtn" style=""><a href="javascript:void(0)" onclick="return checkGetPass();">获取登录验证码</a></span>
+					<span id="countDown" style="display: none;">重新获取：<b id="passGap">30</b>&nbsp;秒</span>
+				</p>
+			</form>
+			<form method="post" action="http://portal/logon.cgi" name="ulogin">
+				<p class="iline">
+					<input type="hidden" name="PtUser" value="">
+                    <input type="hidden" name="PtButton" value="Logon">
+                    <input type="hidden" name="suc_url" value="">
+					<input type="hidden" name="fail_url" value="">
+					<span class="span1">验证码：</span>
+                    <span class="span2"><input id="password" name="PtPwd" type="password" class="inp_bg" value=""></span>
+					<span><img src="../static/blank.gif" class="loginOn" onclick="return checkLogin();"></span>
+				</p>
+				<p class="hint">   </p>
+			</form>
+		</div>
+
+		<div class="txt_view">
+			
+		</div>
+	</div>
+
+</div>
+
+
+<script type="text/javascript">
+var isAgree=false,passsent=true,getPassForm=document.getPass,loginForm=document.ulogin;
+var gap=30;//要重新获取密码需等待时间（秒）
+var getPassBtn=true;//获取密码按钮当前状态
+
+function $(d){return document.getElementById(d)}
+function agree(){
+	if($('checkPic').className=='ck0'){
+		isAgree=true;
+		$('checkPic').className='ck1';
+	}else{
+		isAgree=false;
+		$('checkPic').className='ck0';
+	}
+	return false;
+}
+function check3(){
+	var m=getPassForm.username;
+	if($('mobilenum').innerHTML=='登录名：' && !(/^1[3|5|8][0-9]\d{8}$/.test(m.value))){
+		alert('请正确填写您的手机号！');
+		m.focus();
+		return false;
+	}else if($('mobilenum').innerHTML=='用户账号：' && m.value==''){
+		alert('请填写您的用户账号！');
+		m.focus();
+		return false;
+	}else if(!isAgree){
+		alert('必须勾选"我已阅读并同意免责声明"！');
+		return false;
+	}else return true;
+}
+function checkGetPass(){
+	if(!getPassBtn){
+		alert('您需要等待倒计时归零后方可再次获取验证码！');
+		return false;
+	}
+	if(check3()){
+		passsent=true;
+		getPassForm.submit();
+		alert('验证码将通过短信发送到您的手机，请注意查收！');
+		$('getPassBtn').style.display='none';
+		$('passGap').innerHTML=gap;
+		$('countDown').style.display='';
+		loginForm.PtPwd.focus();
+		getPassBtn=false;
+		var i=gap;
+		var countDown=setInterval(function(){
+			if(i>0){
+				$('passGap').innerHTML=i;
+				i--;
+			}else{
+				clearInterval(countDown);
+				$('passGap').innerHTML='';
+				i=gap;
+				$('passGap').innerHTML=gap;
+				$('countDown').style.display='none';
+				$('getPassBtn').style.display='';
+				getPassBtn=true;
+			}
+		},1000);
+	}
+	return false;
+}
+function checkLogin(){
+	if(!check3())return false;
+	if(!passsent){
+		alert('请先点击"获取登录验证码"接收验证码！');
+		return false;
+	}else if(loginForm.PtPwd.value==''){
+		alert('请填写您接收到的验证码！');
+		loginForm.PtPwd.focus();
+		return false;
+	}else{
+		loginForm.PtUser.value=getPassForm.username.value;
+		loginForm.submit();
+	}
+	return false;
+}
+</script>
+
+
+</body></html>

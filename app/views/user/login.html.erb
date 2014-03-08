@@ -1,0 +1,11 @@
+<form action="/authenticate" method="POST" >
+  <input type="hidden" name ="gw_id" value="<%= params[:gw_id] %>" />
+  <input type="hidden" name ="gw_address" value="<%= params[:gw_address] %>" />
+  <input type="hidden" name ="gw_port" value="<%= params[:gw_port] %>" />
+  <input type="hidden" name ="url" value="<%= params[:url] %>" />
+  <p>Username: <input type="input" name ="username"  /></p><br/>
+  <p>CheckCode: <input type="input" name ="checkcode" /></p>
+  <input type="submit" value="submit" />
+</form>
+<%= @userdevice %>
+

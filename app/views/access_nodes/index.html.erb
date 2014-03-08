@@ -1,0 +1,36 @@
+<h1>Listing access_nods</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Mac</th>
+    <th>Redirect url</th>
+    <th>Portal url</th>
+    <th>status</th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @access_nodes.each do |access| %>
+  <tr>
+    <td><%= access.name %></td>
+    <td><%= access.mac %></td>
+    <td><%= access.redirect_url %></td>
+    <td><%= access.portal_url %></td>
+    <td><%= link_to 'Show', access %></td>
+    <td><%= link_to 'Edit', edit_access_node_path(access) %></td>
+    <td><%= link_to 'Destroy', access, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td>
+    <% if access.last_seen && Time.now-access.last_seen < 60 %>
+      <%= "working" %>
+    <% else %>
+      <%= "stop" %>
+    <% end %>
+    </td>  
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Access nod', new_access_node_path %>

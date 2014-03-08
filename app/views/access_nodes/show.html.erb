@@ -1,0 +1,98 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @access_node.name %>
+</p>
+
+<p>
+  <b>Mac:</b>
+  <%= @access_node.mac %>
+</p>
+
+<p>
+  <b>Redirect url:</b>
+  <%= @access_node.redirect_url %>
+</p>
+
+<p>
+  <b>Portal url:</b>
+  <%= @access_node.portal_url %>
+</p>
+<p>
+  <b>Sysuptime:</b>
+  <%= @access_node.sys_uptime %>
+</p>
+
+<p>
+  <b>Sysupload:</b>
+  <%= @access_node.sys_upload %>
+</p>
+
+<p>
+  <b>Sys_memfree:</b>
+  <%= @access_node.sys_memfree %>
+</p>
+
+<p>
+  <b>total_up:</b>
+  <%= convert_to_human(@access_node.total_up) %>
+</p>
+
+<p>
+  <b>total_down:</b>
+  <%= convert_to_human(@access_node.total_down) %>
+</p>
+
+<p>
+  <b>updatetime:</b>
+  <%= @access_node.update_time %>
+</p>
+
+<p>
+  <b>remote_addr:</b>
+  <%= @access_node.remote_addr %>
+</p>
+<p>
+  <b>last_seen:</b>
+  <% if @access_node.last_seen %>
+    <%= Time.now - @access_node.last_seen %>
+  <% end %>
+</p>
+<table>
+  <tr>
+    <td>
+      Created On
+    </td>
+    <td>
+      Updated On
+    </td>
+    <td>
+      IP Address
+    </td>
+    <td>
+      MAC Address
+    </td>
+    <td>
+      Upstream
+    </td>
+    <td>
+      Downstream
+    </td>
+    <td>
+      Expired
+    </td>
+    <td>
+      out-line
+    </td>
+  </tr>
+  <%= render :partial => 'connection', :collection => @connections %>
+</table>
+
+<%= will_paginate @connections %>
+
+
+<%= link_to 'Edit', edit_access_node_path(@access_node) %> |
+<%= link_to 'Back', access_nodes_path %>
+
+

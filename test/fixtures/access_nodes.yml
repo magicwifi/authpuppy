@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: MyString
+  mac: MyString
+  sys_uptime: 1
+  sys_upload: 1
+  sys_memfree: 1
+  remote_addr: MyString
+  update_time: 1
+  last_seen: 2014-03-02 13:56:50
+  redirect_url: MyString
+  portal_url: MyString
+
+two:
+  name: MyString
+  mac: MyString
+  sys_uptime: 1
+  sys_upload: 1
+  sys_memfree: 1
+  remote_addr: MyString
+  update_time: 1
+  last_seen: 2014-03-02 13:56:50
+  redirect_url: MyString
+  portal_url: MyString

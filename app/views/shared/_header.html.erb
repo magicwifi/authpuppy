@@ -1,0 +1,13 @@
+<div class="header">
+  <div class="container clearfix">
+    <ul id="user-links">
+      <% if current_admin %>
+        <li><%= link_to current_admin.name %></li>
+        <li><%= link_to "退出", logout_path, method: "delete" %></li>
+      <% else %>
+        <li><%= link_to "登录", root_url %></li>
+      <% end %>
+    </ul>
+  </div>  
+</div>
+
