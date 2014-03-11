@@ -3,7 +3,7 @@ class AccessNodesController < ApplicationController
   before_filter :check_admin
   
   def index
-    @access_nodes = AccessNode.find(:all);
+    @access_nodes = AccessNode.paginate(page: params[:page]);
   end
 
   def new
@@ -47,8 +47,8 @@ class AccessNodesController < ApplicationController
   def show
     page = params[:page] || 1
     timeframe = params[:time] || Time.now - 1.month
-    @access_node = AccessNode.find(params[:id])
-    @connections = Connection.list_by_date(page, timeframe, @access_node)
+    @access = AccessNode.find(params[:id])
+    @connections = @access.connections.list_by_date(page, timeframe, @access_node)
   end
   
   def editconfig

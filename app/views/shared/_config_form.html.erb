@@ -1,0 +1,8 @@
+<%= form_tag "/access_nodes/setconfig" do  %>
+  <%= hidden_field_tag "id", access.id %>
+  hi
+  <div class="field">
+    <%= text_area_tag :cmdline, placeholder: "发布管理命令..." %>
+  </div>
+  <%= f.submit "提交", class: "btn btn-large btn-primary" %>
+<% end %>

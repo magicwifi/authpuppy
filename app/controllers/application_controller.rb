@@ -1,3 +1,4 @@
+# encoding: utf-8
 class ApplicationController < ActionController::Base
 
   @@last_garbage_collection ||= nil
@@ -9,6 +10,7 @@ class ApplicationController < ActionController::Base
 
       delete_unused_connections
       expire_old_connections
+      delete_unmac_connections
     end
   end
 
@@ -17,6 +19,12 @@ class ApplicationController < ActionController::Base
   def delete_unused_connections
     five_minutes_ago = Time.now - 5.minutes
     for connection in Connection.find(:all, :conditions => ["used_on is null and created_at < ?", five_minutes_ago])
+      connection.destroy
+    end
+  end
+
+  def delete_unmac_connections
+    for connection in Connection.find(:all, :conditions => ["mac is null"])
       connection.destroy
     end
   end
@@ -36,7 +44,7 @@ class ApplicationController < ActionController::Base
 
   def check_admin
     unless current_admin
-      redirect_to :root, :notice => "Only admin can do this."
+      redirect_to :root, :notice => "请先登陆"
     end
   end
 

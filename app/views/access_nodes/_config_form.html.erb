@@ -1,0 +1,6 @@
+<%= form_tag "/access_nodes/setconfig" do  %>
+  <div class="field">
+    <%= text_area_tag :cmdline, placeholder: "发布管理命令..." %>
+  </div>
+  <%= submit_tag "提交", class: "btn btn-large btn-primary" %>
+<% end %>

@@ -2,6 +2,7 @@
 class AdminsController < ApplicationController
   
   def login
+    cookies.delete(:token)
   end
 
   def logout
@@ -15,8 +16,8 @@ class AdminsController < ApplicationController
       cookies.permanent[:token] = admin.token
       redirect_to access_nodes_url, :notice => "登录成功"
     else
-      flash[:error] = "无效的用户名和密码"
-      redirect_to :login
+      flash[:notice] = "无效的用户名和密码"
+      redirect_to :action => "login"
     end
   end
 

@@ -1,36 +1,19 @@
-<h1>Listing access_nods</h1>
+<h1>Wifi节点列表</h1>
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Mac</th>
-    <th>Redirect url</th>
-    <th>Portal url</th>
-    <th>status</th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @access_nodes.each do |access| %>
-  <tr>
-    <td><%= access.name %></td>
-    <td><%= access.mac %></td>
-    <td><%= access.redirect_url %></td>
-    <td><%= access.portal_url %></td>
-    <td><%= link_to 'Show', access %></td>
-    <td><%= link_to 'Edit', edit_access_node_path(access) %></td>
-    <td><%= link_to 'Destroy', access, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-    <td>
+<ul class="users">
+  <%= will_paginate %>
+  <% @access_nodes.each do |access| %>
+    <li>
     <% if access.last_seen && Time.now-access.last_seen < 60 %>
-      <%= "working" %>
+      <%= link_to image_tag("work.png", size:"52x52" ) %>
     <% else %>
-      <%= "stop" %>
+      <%= link_to image_tag("stop.png", size:"52x52" ) %>
     <% end %>
-    </td>  
-  </tr>
-<% end %>
-</table>
+    <%= link_to access.mac, access %> | <%= link_to "删除节点", access, method: :delete, data: { confirm: "确认删除?" } %>
+    </li>
+  <% end %>
+  <%= will_paginate %>
+</ul>
 
-<br />
 
-<%= link_to 'New Access nod', new_access_node_path %>
+

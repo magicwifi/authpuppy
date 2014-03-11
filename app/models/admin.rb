@@ -11,5 +11,6 @@ class Admin < ActiveRecord::Base
       self[column] = SecureRandom.urlsafe_base64
     end while Admin.exists?(column => self[column])
   end
+
 end
 

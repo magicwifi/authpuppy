@@ -15,6 +15,7 @@ Authpuppy::Application.routes.draw do
   get "portal" => "user#portal"
   post "authenticate" =>"user#authenticate"
   get "logout" =>"user#logout"
+  post "bindurl" =>"user#bindurl"
 
 
 end

@@ -1,28 +1,6 @@
-<tr>
-  <td>
-    <%= connection.used_on %>
-  </td>
-  <td>
-    <%= connection.expired_on %>
-  </td>
-  <td>
-    <%= connection.ipaddr %>
-  </td>
-  <td>
-    <%= connection.mac %>
-  </td>
-  <td>
-    <%= convert_to_human connection.incoming %>
-  </td>
-  <td>
-    <%= convert_to_human connection.outgoing %>
-  </td>
-  <td>
-    <%= connection.expired? %>
-  </td>
-  <td>
-    <% if !connection.ipaddr.nil? and !connection.expired?  %>
-      <a href="/logout?token=<%= connection.token.to_s %>">offline</a>
-    <% end %>
-  </td>
-</tr>
+<li>
+<span class="content"><%= connection.mac %></span>
+<span class="timestamp">
+  链接时间: <%= connection.used_on %>
+</span>
+</li>

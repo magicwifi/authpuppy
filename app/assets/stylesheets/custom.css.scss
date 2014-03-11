@@ -1,0 +1,163 @@
+@import "bootstrap";
+
+html {
+  overflow-y: scroll;
+}
+body {
+  padding-top: 60px;
+}
+section {
+  overflow: auto;
+}
+textarea {
+  resize: vertical;
+}
+.center {
+  text-align: center;
+}
+.center h1 {
+  margin-bottom: 10px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  line-height: 1;
+}
+
+h1 {
+  font-size: 3em;
+  letter-spacing: -2px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+h2 {
+  font-size: 1.2em;
+  letter-spacing: -1px;
+  margin-bottom: 30px;
+  text-align: center;
+  font-weight: normal;
+  color: #999;
+}
+
+p{
+font-size: 1.1em; line-height: 1.7em;
+}
+
+#logo {
+  float: left;
+  margin-right: 10px;
+  font-size: 1.7em;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: -1px;
+  padding-top: 9px;
+  font-weight: bold;
+  line-height: 1;
+}
+header ul li {
+  margin-right: 10px;
+  font-size: 1.7em;
+  color: #fff;
+  letter-spacing: -1px;
+  line-height: 1;
+}
+#logo:hover {
+  color: #fff;
+  text-decoration: none;
+}
+footer {
+  margin-top: 45px;
+  padding-top: 5px;
+  border-top: 1px solid #eaeaea;
+  color: #999;
+}
+footer a {
+  color: #555;
+}
+footer a:hover {
+  color: #222;
+}
+footer small {
+  float: left;
+}
+footer ul {
+  float: right;
+  list-style: none;
+}
+footer ul li {
+  float: left;
+  margin-left: 10px;
+}
+
+
+input, textarea, select, .uneditable-input {
+  border: 1px solid #bbb;
+  width: 100%;
+  margin-bottom: 15px;
+}
+input {
+  height: auto !important;
+}
+.flash-message {
+  background-color: #23A6E4;
+  line-height: 40px;
+  color: white;
+  text-align: center;
+  font-size: 20px;
+}
+.users {
+  list-style: none;
+  margin: 0;
+  li {
+    overflow: auto;
+    padding: 10px 0;
+    border-top: 1px solid $grayLighter;
+    &:last-child {
+      border-bottom: 1px solid $grayLighter;
+    }
+  } 
+}
+aside {
+  section {
+    padding: 10px 0;
+    border-top: 1px solid $grayLighter;
+    &:first-child {
+      border: 0;
+      padding-top: 0;
+    }
+    span {
+      display: block;
+      margin-bottom: 3px;
+      line-height: 1;
+    }
+    h1 {
+      font-size: 1.4em;
+      text-align: left;
+      letter-spacing: -1px;
+      margin-bottom: 3px;
+      margin-top: 0px;
+    }
+  }
+  textarea {
+    height: 100px;
+    margin-bottom: 5px;
+  } 
+}
+#gravatar {
+  float: left;
+  margin-right: 10px;
+}
+.connections {
+  list-style: none;
+  margin: 10px 0 0 0;
+  li {
+    padding: 10px 0;
+    border-top: 1px solid #e8e8e8;
+  } 
+}
+.content {
+  display: block;
+}
+.timestamp {
+  color: $grayLight;
+}
