@@ -1,0 +1,8 @@
+  <% if @access.last_seen && Time.now-@access.last_seen < 60 %>
+    <%= link_to image_tag("work.png", :class => 'gravatar', :size=>"52x52" ) %>
+  <% else %>
+    <%= link_to image_tag("stop.png", :class => 'gravatar', :size=>"52x52" ) %>
+  <% end %>
+<h1>
+  <%= @access.mac %>
+</h1>

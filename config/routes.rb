@@ -4,6 +4,7 @@ Authpuppy::Application.routes.draw do
   delete "logout" => "admins#logout", :as => "logout"
 
   resources :access_nodes
+  get "access_nodes/home/:id" => "access_nodes#home"
   get "access_nodes/editconfig/:id" => "access_nodes#editconfig"
   post "access_nodes/setconfig" => "access_nodes#setconfig"
   get "access_nodes/showconfig/:mac" => "access_nodes#showconfig"
@@ -14,8 +15,7 @@ Authpuppy::Application.routes.draw do
   get "post/:aunnum" => "wifidog#authupdate"
   get "portal" => "user#portal"
   post "authenticate" =>"user#authenticate"
-  get "logout" =>"user#logout"
+  get "logout" =>"user#logout", :as => "offline"
   post "bindurl" =>"user#bindurl"
-
 
 end

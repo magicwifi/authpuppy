@@ -4,7 +4,7 @@
   <%= will_paginate %>
   <% @access_nodes.each do |access| %>
     <li>
-    <% if access.last_seen && Time.now-access.last_seen < 60 %>
+    <% if access.running? %>
       <%= link_to image_tag("work.png", size:"52x52" ) %>
     <% else %>
       <%= link_to image_tag("stop.png", size:"52x52" ) %>

@@ -1,6 +1,18 @@
+<% if connection.mac  %>
 <li>
-<span class="content"><%= connection.mac %></span>
+<span class="content">
+  MAC地址:<%= connection.mac  %>
+  <% if connection.phonenum %>
+    / 手机号:<%= connection.phonenum  %> 
+  <% end %>
+<% if !connection.expired?  %>
+    <a href="/logout?token=<%= connection.token %>" >下线</a>
+<% end %>
+</span>
 <span class="timestamp">
-  链接时间: <%= connection.used_on %>
+  下行:<%= convert_to_human connection.incoming %>
+  / 上行:<%= convert_to_human connection.outgoing %>
+  / 链接时间: <%= connection.used_on %>
 </span>
 </li>
+<% end %>

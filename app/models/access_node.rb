@@ -48,5 +48,12 @@ class AccessNode < ActiveRecord::Base
     return bytes_down
   end
 
+  def running?
+    if self.last_seen && Time.now-self.last_seen < 60
+      return true;
+    else
+      return false;
+    end 
+  end
 
 end

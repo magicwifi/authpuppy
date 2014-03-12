@@ -3,10 +3,10 @@
   <aside class="span4">
   <section>
   <h1>
-    <% if @access.last_seen && Time.now-@access.last_seen < 60 %>
-      <%= link_to image_tag("work.png", :id => 'gravatar' ) %>
+    <% if @access.running? %>
+      <%= link_to image_tag("work.png", :class => 'gravatar' ) %>
     <% else %>
-      <%= link_to image_tag("stop.png", :id => 'gravatar' ) %>
+      <%= link_to image_tag("stop.png", :class => 'gravatar' ) %>
     <% end %>
     <%= @access.mac %>
   </h1>
@@ -16,9 +16,12 @@
   <span>
   下行带宽:<%= convert_to_human(@access.total_down) %>
   </span>
+  <span>
+  内存空闲:<%= @access.sys_memfree %>
+  </span>
   </section>
      <section>
-     <%= render :partial =>'config_form' %>
+     <%= render 'config_form' %>
       </section>
   </aside>
   <div class="span8">

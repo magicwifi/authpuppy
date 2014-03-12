@@ -50,6 +50,10 @@ class AccessNodesController < ApplicationController
     @access = AccessNode.find(params[:id])
     @connections = @access.connections.list_by_date(page, timeframe, @access_node)
   end
+
+  def home
+    @access = AccessNode.find(params[:id])
+  end
   
   def editconfig
     @access_node = AccessNode.find(params[:id]);

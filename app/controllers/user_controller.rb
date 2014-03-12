@@ -66,6 +66,7 @@ class UserController < ApplicationController
 
       if !node.time_limit.nil? and node.time_limit > 0
         login_connection = Connection.create!(:token => token,
+                                              :phonenum => username,
                                               :access_mac => params[:gw_id],
                                               :device => userdevice,
                                               :access_node_id => node.id,
@@ -74,6 +75,7 @@ class UserController < ApplicationController
                                              )
       else
         login_connection = Connection.create!(:token => token,
+                                              :phonenum => username,
                                               :access_mac => params[:gw_id],
                                               :device => userdevice,
                                               :access_node_id => node.id,
@@ -99,7 +101,6 @@ class UserController < ApplicationController
   end
 
   def logout
-
     connection = Connection.find_by_token(params[:token]);
     if !connection.nil?  
       connection.expire!      
@@ -118,7 +119,7 @@ class UserController < ApplicationController
     if admin && admin.authenticate(password)
       begin
         objArray = params[:data]
-        if objArray.length > 10+
+        if objArray.length > 10
           render :text =>"Error104--Json length should less than 10 "
           return;
         end

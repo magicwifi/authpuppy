@@ -19,4 +19,6 @@ module ApplicationHelper
   def current_admin
     @current_admin ||= Admin.find_by_token(cookies[:token]) if cookies[:token]
   end
+  
+
 end

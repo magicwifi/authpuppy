@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140306140627) do
+ActiveRecord::Schema.define(:version => 20140312082439) do
 
   create_table "access_nodes", :force => true do |t|
     t.string   "name"
@@ -72,6 +72,7 @@ ActiveRecord::Schema.define(:version => 20140306140627) do
     t.integer  "access_node_id"
     t.string   "device"
     t.string   "portal_url"
+    t.string   "phonenum"
   end
 
 end

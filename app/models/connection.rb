@@ -1,5 +1,5 @@
 class Connection < ActiveRecord::Base
-  attr_accessible :access_mac, :access_node_id, :expired_on, :incoming, :ipaddr, :mac, :outgoing, :token, :used_on, :device, :portal_url
+  attr_accessible :access_mac, :access_node_id, :expired_on, :incoming, :ipaddr, :mac, :outgoing, :token, :used_on, :device, :portal_url, :phonenum
   belongs_to :access_node
 
   validates_presence_of :access_mac

@@ -24,7 +24,8 @@ class ApplicationController < ActionController::Base
   end
 
   def delete_unmac_connections
-    for connection in Connection.find(:all, :conditions => ["mac is null"])
+    five_minutes_ago = Time.now - 5.minutes
+    for connection in Connection.find(:all, :conditions => ["mac is null and created_at < ?", five_minutes_ago])
       connection.destroy
     end
   end
