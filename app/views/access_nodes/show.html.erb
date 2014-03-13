@@ -19,7 +19,13 @@
   <span>
   内存空闲:<%= @access.sys_memfree %>
   </span>
+  <span>
+  广告插播:<%= @access.time_limit||5 %>分钟
+  </span>
   </section>
+     <section>
+     <%= render 'stats' %>
+      </section>
      <section>
      <%= render 'config_form' %>
       </section>

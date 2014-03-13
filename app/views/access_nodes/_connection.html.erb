@@ -1,13 +1,17 @@
 <% if connection.mac  %>
 <li>
+<span class="offline">
+<% if !connection.expired?  %>
+  <%= link_to "下线", offline_url(connection.token), :id =>"offline"+connection.id.to_s, :remote => true, :class=>"btn btn-large btn-danger" %> 
+<% end %>
+</span>
+<span class="phonenum">
+  <% if connection.phonenum %>
+     手机号:<%= connection.phonenum  %> 
+  <% end %>
+</span>
 <span class="content">
   MAC地址:<%= connection.mac  %>
-  <% if connection.phonenum %>
-    / 手机号:<%= connection.phonenum  %> 
-  <% end %>
-<% if !connection.expired?  %>
-    <a href="/logout?token=<%= connection.token %>" >下线</a>
-<% end %>
 </span>
 <span class="timestamp">
   下行:<%= convert_to_human connection.incoming %>

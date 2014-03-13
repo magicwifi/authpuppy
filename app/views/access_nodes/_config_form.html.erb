@@ -1,7 +1,7 @@
 <%= form_tag "/access_nodes/setconfig" do  %>
   <%= hidden_field_tag "id", @access.id %>
   <div class="field">
-    <%= text_area_tag :cmdline,  "发布管理命令..." %>
+    <%= select_tag :cmdline, "<option value='reboot'>重启设备</option><option value='wifi down'>无线关闭</option><option value='wifi down'>无线开启</option><option value='wifi restart'>无线重启</option>".html_safe %>
   </div>
-  <%= submit_tag "提交", class: "btn btn-large btn-primary" %>
+  <%= submit_tag "远程管理", class: "btn btn-large btn-primary" %>
 <% end %>

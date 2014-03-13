@@ -49,6 +49,8 @@ class AccessNodesController < ApplicationController
     timeframe = params[:time] || Time.now - 1.month
     @access = AccessNode.find(params[:id])
     @connections = @access.connections.list_by_date(page, timeframe, @access_node)
+    @online_num = @connections.show_online()
+    @daily_num = @connections.unique_by_date(Time.now.to_date).length
   end
 
   def home

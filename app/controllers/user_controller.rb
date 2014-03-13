@@ -8,7 +8,7 @@ class UserController < ApplicationController
       return
     end
     if !node.redirect_url.blank?
-      redirect_url = node.redirect_url+"&gw_address="+params[:gw_address].to_s+"&gw_port="+params[:gw_port].to_s+"&gw_id="+params[:gw_id].to_s
+      redirect_url = node.redirect_url+"&gw_address="+params[:gw_address].to_s+"&gw_port="+params[:gw_port].to_s+"&gw_id="+params[:gw_id].to_s+"&public_ip=124.127.116.178"
       redirect_to redirect_url
     else
       @userdevice = request.user_agent.downcase
@@ -56,7 +56,7 @@ class UserController < ApplicationController
     authflag =   node.auth.authenticate username, password
     
     if !authflag 
-      redirect_url = node.redirect_url+"&gw_address="+params[:gw_address].to_s+"&gw_port="+params[:gw_port].to_s+"&gw_id="+params[:gw_id].to_s
+      redirect_url = node.redirect_url+"&gw_address="+params[:gw_address].to_s+"&gw_port="+params[:gw_port].to_s+"&gw_id="+params[:gw_id].to_s+"&public_ip=124.127.116.178"
       redirect_to redirect_url
       return
     else
@@ -101,11 +101,19 @@ class UserController < ApplicationController
   end
 
   def logout
-    connection = Connection.find_by_token(params[:token]);
-    if !connection.nil?  
-      connection.expire!      
+    @connection = Connection.find_by_token(params[:token]);
+    if @connection.nil?
+      render :text=> "Empty Connection"
+    else  
+      if @connection.expire!
+        respond_to do |format|  
+          format.html { render :text=>"Success Offline" }
+          format.js { render :layout=>false }
+        end
+      else
+        render :text=> "Error Offilne"
+      end 
     end
-    render :text => "finish kick off" 
   end
 
   def bindurl

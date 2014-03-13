@@ -31,6 +31,8 @@ GEM
     arel (3.0.3)
     bcrypt-ruby (3.0.1)
     bootstrap-sass (2.0.4.0)
+    bootstrap-will_paginate (0.0.9)
+      will_paginate
     builder (3.0.4)
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
@@ -102,7 +104,7 @@ GEM
     uglifier (2.4.0)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
-    will_paginate (3.0.5)
+    will_paginate (3.0.4)
 
 PLATFORMS
   ruby
@@ -110,6 +112,7 @@ PLATFORMS
 DEPENDENCIES
   bcrypt-ruby (~> 3.0.0)
   bootstrap-sass (= 2.0.4)
+  bootstrap-will_paginate (= 0.0.9)
   coffee-rails (~> 3.2.1)
   jquery-rails
   mysql2
@@ -117,4 +120,4 @@ DEPENDENCIES
   rails (= 3.2.13)
   sass-rails (~> 3.2.3)
   uglifier (>= 1.0.3)
-  will_paginate
+  will_paginate (= 3.0.4)

@@ -15,7 +15,7 @@ Authpuppy::Application.routes.draw do
   get "post/:aunnum" => "wifidog#authupdate"
   get "portal" => "user#portal"
   post "authenticate" =>"user#authenticate"
-  get "logout" =>"user#logout", :as => "offline"
+  get "logout/:token" =>"user#logout", :as => "offline"
   post "bindurl" =>"user#bindurl"
 
 end
