@@ -22,6 +22,7 @@ class AccessNodesController < ApplicationController
 
   def edit
     @access = AccessNode.find(params[:id])
+    @auth =@access.auth ||= Auth.first
   end
 
   def create

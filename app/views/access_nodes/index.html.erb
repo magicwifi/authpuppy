@@ -9,7 +9,7 @@
     <% else %>
       <%= link_to image_tag("stop.png", size:"52x52" ) %>
     <% end %>
-    <%= link_to access.mac, access %> | <%= link_to "删除节点", access, method: :delete, data: { confirm: "确认删除?" } %>
+    <%= link_to access.mac, access %> | <%= link_to "编辑节点", access, method: :delete, data: { confirm: "确认删除?" } %>
     </li>
   <% end %>
   <%= will_paginate %>

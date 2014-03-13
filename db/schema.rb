@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140312082439) do
+ActiveRecord::Schema.define(:version => 20140313062911) do
 
   create_table "access_nodes", :force => true do |t|
     t.string   "name"
@@ -53,9 +53,9 @@ ActiveRecord::Schema.define(:version => 20140312082439) do
   create_table "auths", :force => true do |t|
     t.string   "auth_type",      :default => "radius"
     t.boolean  "auth_device",    :default => false
-    t.integer  "access_node_id"
     t.datetime "created_at",                           :null => false
     t.datetime "updated_at",                           :null => false
+    t.integer  "access_node_id"
   end
 
   create_table "connections", :force => true do |t|

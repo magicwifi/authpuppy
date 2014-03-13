@@ -1,6 +1,7 @@
 class Auth < ActiveRecord::Base
   attr_accessible :access_node_id, :auth_device, :auth_type
-
+  belongs_to :access_node
+  
   def check_device(device)
     unless auth_device
         return true 

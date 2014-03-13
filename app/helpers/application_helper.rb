@@ -1,3 +1,4 @@
+# encoding: utf-8
 module ApplicationHelper
   def convert_to_human(bytes)
     kilobytes = bytes/1024
@@ -20,5 +21,20 @@ module ApplicationHelper
     @current_admin ||= Admin.find_by_token(cookies[:token]) if cookies[:token]
   end
   
+  def convert_auth(type)
+    if type == "local"    
+      return "免登陆认证"
+    else
+      return "短信认证"
+    end
+  end
+  
+  def convert_device(device)
+    if device    
+      return "开启"
+    else
+      return "关闭"
+    end
+  end
 
 end
