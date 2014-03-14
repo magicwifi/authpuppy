@@ -22,6 +22,10 @@ class WifidogController < ApplicationController
     end
   end
 
+  def denied
+    render :text=>"Denied Action", :status => 404
+  end
+
   def auth
     authupdate
   end

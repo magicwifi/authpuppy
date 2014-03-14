@@ -10,6 +10,7 @@ Authpuppy::Application.routes.draw do
   get "access_nodes/showconfig/:mac" => "access_nodes#showconfig"
 
   get "ping" => "wifidog#ping"
+  get "gw_message.php" => "wifidog#denied"
   get "auth" => "wifidog#auth"
   get "login" => "user#login"
   get "post/:aunnum" => "wifidog#authupdate"

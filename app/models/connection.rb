@@ -29,9 +29,6 @@ class Connection < ActiveRecord::Base
       unique_macs
     end
     
-    def show_online
-      Connection.where("expired_on > ? ",Time.now).count    
-    end
 
   end
 

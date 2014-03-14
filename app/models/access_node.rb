@@ -12,6 +12,9 @@ class AccessNode < ActiveRecord::Base
   before_validation :sanitize_mac
 
 
+  def show_online
+    self.online_connections.count
+  end
 
   def sanitize_mac
     self.mac = AccessNode.sanitize_mac_address(self.mac)
