@@ -4,13 +4,31 @@ class AccessNode < ActiveRecord::Base
   has_many :online_connections, :class_name => "Connection", :conditions => "used_on is not null and (expired_on is null or expired_on > NOW())"
   has_one :auth
 
-  attr_accessible :last_seen, :mac, :name, :portal_url, :redirect_url, :remote_addr, :sys_memfree, :sys_upload, :sys_uptime, :update_time, :configflag, :cmdline, :time_limit, :auth
+  attr_accessible :last_seen, :mac, :name, :portal_url, :redirect_url, :remote_addr, :sys_memfree, :sys_upload, :sys_uptime, :update_time, :configflag, :cmdline, :time_limit, :auth, :lat, :long
   validates :name, presence: true, uniqueness:true
 
   VALID_MAC_REGEX = /^[0-9A-F]+$/
   validates :mac, presence:true, uniqueness:true, length: { is:12 }, format: { with: VALID_MAC_REGEX }
   before_validation :sanitize_mac
 
+  class << self
+
+    def show_unlinked
+      AccessNode.where("last_seen < ? and last_seen > ? ",Time.now - 60, Time.now - 600)
+    end
+
+    def disconnect
+      nodes = AccessNode.show_unlinked
+      nodes.each do |node|
+        node.clean_all_conn
+      end
+    end
+    
+    def count_online_node
+      AccessNode.where("last_seen > ? ", Time.now-60 ).count
+    end
+
+  end
 
   def show_online
     self.online_connections.count
@@ -55,6 +73,22 @@ class AccessNode < ActiveRecord::Base
     if self.last_seen && Time.now-self.last_seen < 60
       return true;
     else
+      return false;
+    end 
+  end
+ 
+  def clean_all_conn 
+    connections = self.online_connections
+    connections.each do |connection|
+      connection.expire!
+    end
+  end
+
+  def show_running?
+    if self.last_seen && Time.now-self.last_seen < 60
+      return true;
+    else
+      self.clean_all_conn
       return false;
     end 
   end

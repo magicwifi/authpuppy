@@ -1,13 +1,23 @@
+
+  <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.5&ak=nDEigMY5QY9ZfEQDzWZU6eBm"></script>
+  <script>
+    jQuery(function($) {
+  var map = new BMap.Map("baidu");
+  var point = new BMap.Point(<%= @access.long %>, <%= @access.lat %>);
+  map.centerAndZoom(point, 15);
+  })
+</script>
 <% provide(:title, @access.name) %>
 <div class="row">
   <aside class="span4">
   <section>
   <h1>
-    <% if @access.running? %>
+    <% if @access.show_running? %>
       <%= link_to image_tag("work.png", :class => 'gravatar' ) %>
     <% else %>
       <%= link_to image_tag("stop.png", :class => 'gravatar' ) %>
     <% end %>
+    <%= @access.name %>
     <%= @access.mac %>
   </h1>
   <span>
@@ -29,6 +39,9 @@
      <section>
      <%= render 'config_form' %>
       </section>
+  <section>
+  <div id="baidu"></div>
+  </section>
   </aside>
   <div class="span8">
     <% if @connections.any? %>

@@ -1,15 +1,15 @@
-<h1>Wifi节点列表</h1>
+<h1>WiFi节点列表</h1>
 
 <ul class="users">
   <%= will_paginate %>
   <% @access_nodes.each do |access| %>
-    <li>
+    <li class="anode">
     <% if access.running? %>
       <%= link_to image_tag("work.png", size:"52x52" ) %>
     <% else %>
       <%= link_to image_tag("stop.png", size:"52x52" ) %>
     <% end %>
-    <%= link_to access.mac, access %> | <%= link_to "编辑节点", edit_access_node_url(access)  %>
+    <%= link_to access.name, access %>  <div class="bnode"> <%= link_to "编辑节点", edit_access_node_url(access), {:class=>"btn btn-primary" } %> | <%= link_to " 高级设置", advance_url(access), {:class => "btn btn-warning" }%></div>
     </li>
   <% end %>
   <%= will_paginate %>

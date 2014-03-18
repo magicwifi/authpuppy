@@ -121,9 +121,11 @@ class UserController < ApplicationController
       render :text => "Error101--Missing parameter"
       return;
     end
+
     username = params[:username]
     password = params[:password]+
-      admin = Admin.find_by_name(username)
+    admin = Admin.find_by_name(username)
+
     if admin && admin.authenticate(password)
       begin
         objArray = params[:data]

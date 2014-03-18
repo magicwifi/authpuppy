@@ -43,6 +43,10 @@ p{
 font-size: 1.1em; line-height: 1.7em;
 }
 
+#baidu {
+  height:300px;
+  border:1px solid gray;
+}
 #logo {
   float: left;
   margin-right: 10px;
@@ -54,6 +58,17 @@ font-size: 1.1em; line-height: 1.7em;
   font-weight: bold;
   line-height: 1;
 }
+#resultreply {
+  font-size: 20px;
+  font-weight: bold;
+  color: #f00;
+}
+#resultreply2 {
+  font-size: 20px;
+  font-weight: bold;
+  color: #f00;
+}
+
 header ul li {
   margin-right: 10px;
   font-size: 1.7em;
@@ -199,3 +214,12 @@ aside {
   } 
 }
 
+.anode {
+font-size: 16px;
+}
+.bnode {
+font-size: 16px;
+float:right;
+padding: 0 60px;
+padding-top: 10px;
+}

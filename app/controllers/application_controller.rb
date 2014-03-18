@@ -11,6 +11,7 @@ class ApplicationController < ActionController::Base
       delete_unused_connections
       expire_old_connections
       delete_unmac_connections
+      AccessNode.disconnect
     end
   end
 
@@ -29,6 +30,7 @@ class ApplicationController < ActionController::Base
       connection.destroy
     end
   end
+
 
   def expire_old_connections
     five_minutes_ago = Time.now - 5.minutes

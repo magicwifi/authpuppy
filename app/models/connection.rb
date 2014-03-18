@@ -6,6 +6,11 @@ class Connection < ActiveRecord::Base
 
   class << self
 
+    def count_online_conn 
+      Connection.where("used_on is not null and (expired_on is null or expired_on > NOW() )").count
+    end
+
+
     def list_by_date(page, date, node)
       if node.nil?
         paginate :per_page => 10, :page => page, :conditions => ['used_on > ?', date], :order => 'used_on desc'

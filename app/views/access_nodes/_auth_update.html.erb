@@ -1,0 +1,16 @@
+<div class="row">
+      <div class="span6 offset1">
+        <h3>设置认证方式</h3>
+        <p></p>
+<%= form_tag "/auth_update", :remote => true do %>
+  <%= hidden_field_tag "id", @access.id %>
+  <div class="field">
+    <%= select_tag :auth_type, "<option value='radius'>短信认证</option><option value='local'>免认证</option>".html_safe %>
+    <%= select_tag :auth_device, "<option value='false'>不限终端</option><option value='true'>禁用PC</option>".html_safe %>
+  </div>
+  <%= submit_tag "确认更改", class: "btn btn-large btn-primary" %>
+<% end %>
+<p></p>
+<div id="resultreply2"></div>
+    </div>
+  </div>

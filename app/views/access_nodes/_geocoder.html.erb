@@ -1,0 +1,15 @@
+<div class="row">
+      <div class="span6 offset1">
+        <h3>请输入详细地址，形如南京市XX路XX号   </h3>
+        <p></p>
+        <%= form_tag "/query_lat_long", :remote => true do %>
+          <%= hidden_field_tag :id, @access.id %>
+  <div class="field">
+          <%= text_field_tag :place, params[:name] %>
+        </div>
+         <%= submit_tag "确认", :class => "btn btn-large btn-primary" %> 
+      <% end %>
+      <p></p>
+      <div id="resultreply"></div>
+    </div>
+  </div>

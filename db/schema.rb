@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140313062911) do
+ActiveRecord::Schema.define(:version => 20140316102516) do
 
   create_table "access_nodes", :force => true do |t|
     t.string   "name"
@@ -24,11 +24,13 @@ ActiveRecord::Schema.define(:version => 20140313062911) do
     t.datetime "last_seen"
     t.string   "redirect_url"
     t.string   "portal_url"
-    t.datetime "created_at",                      :null => false
-    t.datetime "updated_at",                      :null => false
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
     t.boolean  "configflag",   :default => false
     t.string   "cmdline"
     t.integer  "time_limit"
+    t.float    "lat",          :default => 32.0266
+    t.float    "long",         :default => 118.788
   end
 
   add_index "access_nodes", ["mac"], :name => "index_access_nodes_on_mac", :unique => true
