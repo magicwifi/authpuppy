@@ -1,5 +1,5 @@
 class AccessNode < ActiveRecord::Base
-
+  default_scope order('updated_at DESC')
   has_many :connections
   has_many :online_connections, :class_name => "Connection", :conditions => "used_on is not null and (expired_on is null or expired_on > NOW())"
   has_one :auth
@@ -28,10 +28,15 @@ class AccessNode < ActiveRecord::Base
       AccessNode.where("last_seen > ? ", Time.now-60 ).count
     end
 
+
   end
 
   def show_online
     self.online_connections.count
+  end
+
+  def list_uniq_mac
+    self.connections.select(:mac).uniq
   end
 
   def sanitize_mac

@@ -17,6 +17,6 @@ Authpuppy::Application.routes.draw do
   post "bindurl" =>"user#bindurl"
   post "query_lat_long" => "access_nodes#query_lat_long"
   post "auth_update" => "auth#update"
-  get "timeline" => "activity#timeline"
+  get "timeline" => "activity#timeline", :as => "timeline"
 
 end

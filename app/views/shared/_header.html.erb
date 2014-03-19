@@ -5,6 +5,7 @@
     <nav>
 <ul class="nav pull-right">
       <% if current_admin %>
+        <li><%= link_to "数据", timeline_url %></li>
         <li><%= link_to "列表", access_nodes_path %></li>
         <li><%= link_to current_admin.name %></li>
         <li><%= link_to "退出", logout_path, method: "delete" %></li>

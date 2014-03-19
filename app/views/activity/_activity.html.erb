@@ -1,0 +1,18 @@
+<li>
+    <% if connection.phonenum.nil? %>
+  <span>
+      <i class="fa fa-plus fa-2x"></i>
+  </span>
+  <span class="desc">
+    <%= render "detail", connection: connection, access: access %>
+  </span>
+    <% else %>
+  <span>
+      <i class="fa fa-edit fa-2x"></i>
+  </span>
+  <span class="desc">
+    <%= render "create", connection: connection, access: access %>
+  </span>
+    <% end %>
+  <span class="time"><%= connection.updated_at.month %>.<%= connection.updated_at.day %></span>
+</li>
