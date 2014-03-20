@@ -116,36 +116,5 @@ class UserController < ApplicationController
     end
   end
 
-  def bindurl
-    if params[:data].nil? or params[:username].nil? or params[:password].nil?
-      render :text => "Error101--Missing parameter"
-      return;
-    end
-
-    username = params[:username]
-    password = params[:password]+
-    admin = Admin.find_by_name(username)
-
-    if admin && admin.authenticate(password)
-      begin
-        objArray = params[:data]
-        if objArray.length > 10
-          render :text =>"Error104--Json length should less than 10 "
-          return;
-        end
-        AccessNode.transaction do
-          objArray.each do |object|
-            AccessNode.create!(object)
-          end
-        end
-      rescue Exception => e
-        render :text =>"Error102--Json format error "
-        return;
-      end
-      render :text =>"Success Insert"
-    else
-      render :text =>"Error103--Auth error"
-    end
-  end
 
 end

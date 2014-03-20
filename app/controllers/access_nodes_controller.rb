@@ -76,6 +76,7 @@ class AccessNodesController < ApplicationController
     @auth =@access.auth ||= Auth.first
   end
 
+
   def create
     @access_node = AccessNode.new(params[:access_node])
     if @access_node.save
