@@ -1,11 +1,17 @@
 # encoding: utf-8
 class GuestController < ApplicationController
 
+  def show
+    @status = Status.first
+    @connections = Connection.all
+  end
+
+
   def show_connections
     if params[:mac].nil? or params[:username].nil? or params[:password].nil?
       respond_to do |format|
         format.html {render text: "Error101-Missing Some Parameters"}
-        format.json {render :json => {:status => "Error101-Missing Some Parameters"}}
+        format.json {render :json => {:status => {:code=>101,:message=>"Missing Paramters"}}}
       end
       return;
     end
@@ -16,14 +22,15 @@ class GuestController < ApplicationController
     access = AccessNode.find_by_mac(params[:mac])
     if guest && guest.authenticate(password) && access
       @connections = access.connections.limit(5)
-      respond_to do |format|
-        format.html {render text: "success"}
-        format.json {render json: @connections.to_json(:only => [:mac,:expired_on,:phonenum,:device ])}    
-      end
+      @status = Status.first
+      #respond_to do |format|
+        #format.html {render text: "success"}
+        #format.json {render json: @connections.to_json(:only => [:mac,:expired_on,:phonenum,:device ])}    
+      #end
     else
       respond_to do |format|
         format.html {render text: "Error102-Error Value "}
-        format.json {render :json => {:status => "Error102-Error Value"}}
+        format.json {render :json => {:status => {:code=>102,:message=>"Error Value"}}}
       end
       return;
     end
@@ -33,7 +40,7 @@ class GuestController < ApplicationController
     if params[:data].nil? or params[:username].nil? or params[:password].nil?
       respond_to do |format|
         format.html {render text: "Error101-Missing Some Parameters"}
-        format.json {render :json => {:status => "Error101-Missing Some Parameters"}}
+        format.json {render :json => {:status => {:code=>101, :message=>"Missing Some Parameters"}}}
       end
       return;
     end
@@ -48,7 +55,7 @@ class GuestController < ApplicationController
         if objArray.length > 10
           respond_to do |format|
             format.html {render text: "Error104-Data More Than 10"}
-            format.json {render :json => {:status => "Error104-Data More Than 10"}}
+            format.json {render :json => {:status => {:code=>104,:message=>"Data More Than 10"}}}
           end
           return;
         end
@@ -60,18 +67,18 @@ class GuestController < ApplicationController
       rescue Exception => e
         respond_to do |format|
           format.html {render text: "Error102-Insert Error"}
-          format.json {render :json => {:status => "Error102-Insert Error"}}
+          format.json {render :json => {:status => {:code=>102,:message=>"Insert Error"}}}
         end
         return;
       end
       respond_to do |format|
         format.html {render text: "Success Insert"}
-        format.json {render :json => {:status => "Success Insert"}}
+        format.json {render :json => {:status => {:code=>200,:message=>"Success Insert"}}}
       end
     else
       respond_to do |format|
         format.html {render text: "Error103-Auth Error"}
-        format.json {render :json => {:status => "Error103-Auth Error"}}
+        format.json {render :json => {:status => {:code=>103,:message=>"Auth Error"}}}
       end
     end
   end

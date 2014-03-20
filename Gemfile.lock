@@ -59,7 +59,10 @@ GEM
     mime-types (1.25.1)
     multi_json (1.8.4)
     mysql2 (0.3.15)
+    oj (2.6.0)
     polyglot (0.3.3)
+    rabl (0.9.3)
+      activesupport (>= 2.3.14)
     rack (1.4.5)
     rack-cache (1.2)
       rack (>= 0.4)
@@ -119,6 +122,8 @@ DEPENDENCIES
   font-awesome-rails (= 4.0.3.0)
   jquery-rails
   mysql2
+  oj
+  rabl
   radiustar (~> 0.0.8)
   rails (= 3.2.13)
   sass-rails (~> 3.2.3)

@@ -17,7 +17,6 @@ group :assets do
 end
 
 
-
 gem 'will_paginate', '3.0.4'
 gem 'bootstrap-will_paginate', '0.0.9'
 gem 'radiustar', '~> 0.0.8'
@@ -27,8 +26,7 @@ gem 'bcrypt-ruby', '~> 3.0.0'
 # To use ActiveModel has_secure_password
 
 # To use Jbuilder templates for JSON
-# gem 'jbuilder'
-
+#gem 'jbuilder', :require=>false
 # Use unicorn as the app server
 # gem 'unicorn'
 
@@ -37,3 +35,6 @@ gem 'bcrypt-ruby', '~> 3.0.0'
 
 # To use debugger
 # gem 'debugger'
+gem 'rabl'
+# Also add either `oj` or `yajl-ruby` as the JSON parser
+gem 'oj'

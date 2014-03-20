@@ -19,5 +19,7 @@ Authpuppy::Application.routes.draw do
   post "auth_update" => "auth#update"
   get "timeline" => "activity#timeline", :as => "timeline"
   get "showconnections" => "guest#show_connections"
+  get "showconn" => "guest#show"
+  get "indexconn" => "guest#index"
 
 end
