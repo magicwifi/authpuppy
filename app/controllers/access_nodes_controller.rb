@@ -106,5 +106,10 @@ class AccessNodesController < ApplicationController
     @daily_num = @connections.unique_by_date(Time.now.to_date).length
   end
 
-
+  def setconfig
+    @access = AccessNode.find(params[:id])
+    @access.update_attributes(:cmdline=>params[:cmdline],:configflag =>true ) 
+    render :text=>"success change"
+  end
+  
 end

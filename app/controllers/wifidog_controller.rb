@@ -40,7 +40,13 @@ class WifidogController < ApplicationController
         if connection.expired? or connection.used?
           logger.info "Tried to login with used or expired token: #{params[:token]}"
         else
-          connection.use!
+          connection.update_attributes({
+            :mac => params[:mac],
+            :ipaddr => params[:ip],
+            :incoming => params[:incoming],
+            :outgoing => params[:outgoing],
+            :used_on => Time.now
+          })                        
           auth = 1
         end
       when 'counters'
