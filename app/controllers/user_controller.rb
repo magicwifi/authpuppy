@@ -83,8 +83,15 @@ class UserController < ApplicationController
                                               :portal_url => params[:url] 
                                              )
       end
-      redirect_to  'http://'+params[:gw_address]+':'+params[:gw_port].to_s+'/wifidog/auth?token='+token
+
+      redirect_url = 'http://'+params[:gw_address]+':'+params[:gw_port].to_s+'/wifidog/auth?token='+token 
+      if !params[:platform].nil?
+        render :text => redirect_url;
+        return;
+      end
+      redirect_to  redirect_url
     end
+
   end
 
   def portal
