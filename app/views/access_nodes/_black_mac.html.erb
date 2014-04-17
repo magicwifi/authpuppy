@@ -1,0 +1,9 @@
+<h3>MAC地址黑名单</h3>
+<p></p>
+<div id="bmacadd">
+<% @blackmac.each do |mac| %>
+  <div id="bmac<%= mac.id.to_s %>" style="padding-bottom: 5px;" >
+    <%= mac.mac %> <%= link_to "删除", bmacdel_url(mac), :remote => true, :class=>"btn-link" %>
+  </div>
+<% end %>
+</div>

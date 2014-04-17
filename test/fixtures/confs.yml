@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  checkinterval: 1
+  authinterval: 1
+  checktimeout: 1
+  httpmaxconn: 1
+  access_node_id: 1
+
+two:
+  checkinterval: 1
+  authinterval: 1
+  checktimeout: 1
+  httpmaxconn: 1
+  access_node_id: 1

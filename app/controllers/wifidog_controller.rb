@@ -16,9 +16,50 @@ class WifidogController < ApplicationController
     
     if node.configflag == true
       node.update_attributes( :configflag => false );
-      render :text => "Pong:"+node.cmdline
+      render :text => "Pong:"
     else
       render :text => "Pong"
+    end
+  end
+
+  def retrieve
+    node = AccessNode.find_by_mac(params[:gw_id])
+    render :text => "Cmd:"+node.cmdline
+  end
+
+  def fetchconf
+    str="";
+    node = AccessNode.find_by_mac(params[:gw_id])
+    if !node.nil?
+      node.update_attributes( :last_seen => Time.now )
+    #render :text => "Conf:checkinterval=60&authinterval=120&clienttimeout=5&httpdmaxconn=5&trustedmaclist=98:d6:f7:8a:77:03&firewallrule=117.34.78.195+61.139.2.69"
+      conf = node.conf
+      if !conf.nil?
+        str += "Conf:checkinterval="+conf.checkinterval.to_s+"&authinterval="+conf.authinterval.to_s+"&clienttimeout="+conf.clienttimeout.to_s+"&httpdmaxconn="+conf.httpmaxconn.to_s
+      end
+
+      if !node.trusted_macs.nil?
+        str += "&trustedmaclist="
+        macs = Array.new
+        node.trusted_macs.each do |trusted|
+          macs.push(trusted.mac)
+        end
+        str += macs.join("+")
+      end
+
+      if !node.public_ips.nil?
+        str += "&firewallrule="
+        ips = Array.new
+        node.public_ips.each do |ip|
+          ips.push(ip.publicip)
+        end
+        str += ips.join("+")
+      end
+      
+      render :text => str
+    else
+      redirect_to "/404"
+      return;
     end
   end
 

@@ -1,0 +1,2 @@
+$('#resultreply').text('设置成功');
+$('#tmacadd').append('<div id="mac<%= @mac.id %>" style="padding-bottom: 5px;" ><%= @mac.mac %> <%= link_to "删除", macdel_url(@mac.id),  :remote => true, :class=>"btn-link" %></div>')

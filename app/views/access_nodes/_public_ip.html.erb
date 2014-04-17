@@ -1,0 +1,9 @@
+<h3>公网IP白名单</h3>
+<p></p>
+<div id="ipadd">
+<% @publicips.each do |ip| %>
+  <div id="ip<%= ip.id.to_s %>" style="padding-bottom: 5px;" >
+    <%= ip.publicip %> <%= link_to "删除", ipdel_url(ip), :remote => true, :class=>"btn-link" %>
+  </div>
+<% end %>
+</div>

@@ -1,0 +1,36 @@
+<div class="container" />
+<% provide(:title, @access.name) %>
+<div class="row">
+  <aside class="span4">
+  <section>
+  <h1>
+    <% if @access.running? %>
+      <%= link_to image_tag("work.png", :class => 'gravatar' ) %>
+    <% else %>
+      <%= link_to image_tag("stop.png", :class => 'gravatar' ) %>
+    <% end %>
+    <%= @access.name %>
+    <%= @access.mac %>
+  </h1>
+  <span>
+     上行带宽:<%= convert_to_human(@access.total_up)  %>
+  </span>
+  <span>
+  下行带宽:<%= convert_to_human(@access.total_down) %>
+  </span>
+  <span>
+  内存空闲:<%= @access.sys_memfree %>
+  </span>
+  <span>
+  广告插播:<%= @access.time_limit||5 %>分钟
+  </span>
+  </section>
+  <section>
+     <%= render 'config' %>
+  </section>
+  </aside>
+  <div class="span8">
+     <%= render 'config_update' %>
+  </div>
+</div>
+</div>

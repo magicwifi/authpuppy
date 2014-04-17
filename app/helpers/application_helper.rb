@@ -37,4 +37,14 @@ module ApplicationHelper
     end
   end
 
+  def convert_conf_check(checkinterval)
+    checkstr = checkinterval/60
+    return checkstr.to_s+"分钟"
+  end
+
+  def convert_conf_auth(authinterval)
+    authstr = authinterval/60
+    return authstr.to_s+"分钟"
+  end
+
 end

@@ -1,0 +1,15 @@
+<div class="row">
+      <div class="span6 offset1">
+        <h3>请输入添加到白名单的设备MAC地址   </h3>
+        <p></p>
+        <%= form_tag "/tmac_add", :remote => true do %>
+          <%= hidden_field_tag :id, @access.id %>
+  <div class="field">
+          <%= text_field_tag :mac, params[:mac] %>
+        </div>
+         <%= submit_tag "确认", :class => "btn btn-large btn-primary" %> 
+      <% end %>
+      <p></p>
+      <div id="resultreply"></div>
+    </div>
+  </div>

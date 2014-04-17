@@ -1,8 +1,12 @@
 class AccessNode < ActiveRecord::Base
   default_scope order('updated_at DESC')
   has_many :connections
+  has_many :trusted_macs
+  has_many :black_macs
+  has_many :public_ips
   has_many :online_connections, :class_name => "Connection", :conditions => "used_on is not null and (expired_on is null or expired_on > NOW())"
   has_one :auth
+  has_one :conf
 
   attr_accessible :last_seen, :mac, :name, :portal_url, :redirect_url, :remote_addr, :sys_memfree, :sys_upload, :sys_uptime, :update_time, :configflag, :cmdline, :time_limit, :auth, :lat, :long
   validates :name, presence: true, uniqueness:true
@@ -12,7 +16,6 @@ class AccessNode < ActiveRecord::Base
   before_validation :sanitize_mac
 
   class << self
-
     def show_unlinked
       AccessNode.where("last_seen < ? and last_seen > ? ",Time.now - 60, Time.now - 600)
     end
@@ -96,6 +99,15 @@ class AccessNode < ActiveRecord::Base
       self.clean_all_conn
       return false;
     end 
+  end
+
+  def banned_mac?(mac)
+    self.black_macs.each do |black|
+      if black.mac == mac
+        return true;
+      end
+    end
+    return  false;
   end
 
 end

@@ -2,13 +2,15 @@
 class UserController < ApplicationController
 
   def login
+
     node = AccessNode.find_by_mac(params[:gw_id]) 
-    if node.nil? 
+
+    if node.nil? or node.banned_mac? params[:mac] 
       redirect_to "/404"
       return
     end
     if !node.redirect_url.blank?
-      redirect_url = node.redirect_url+"&gw_address="+params[:gw_address].to_s+"&gw_port="+params[:gw_port].to_s+"&gw_id="+params[:gw_id].to_s+"&public_ip=124.127.116.178"
+      redirect_url = node.redirect_url+"&gw_address="+params[:gw_address].to_s+"&gw_port="+params[:gw_port].to_s+"&gw_id="+params[:gw_id].to_s+"&public_ip=124.127.116.178"+"&mac="+params[:mac].to_s
       redirect_to redirect_url
     else
       @userdevice = request.user_agent.downcase
@@ -47,6 +49,7 @@ class UserController < ApplicationController
       userdevice = "uknown device"
     end
 
+
     deviceflag = node.auth.check_device(userdevice)
     if !deviceflag
       redirect_to "/404"
@@ -54,9 +57,10 @@ class UserController < ApplicationController
     end
 
     authflag =   node.auth.authenticate username, password
+
     
     if !authflag 
-      redirect_url = node.redirect_url+"&gw_address="+params[:gw_address].to_s+"&gw_port="+params[:gw_port].to_s+"&gw_id="+params[:gw_id].to_s+"&public_ip=124.127.116.178"
+      redirect_url = node.redirect_url+"&gw_address="+params[:gw_address].to_s+"&gw_port="+params[:gw_port].to_s+"&gw_id="+params[:gw_id].to_s+"&public_ip=124.127.116.178"+"&mac="+params[:mac].to_s
       redirect_to redirect_url
       return
     else
@@ -84,7 +88,7 @@ class UserController < ApplicationController
                                              )
       end
 
-      redirect_url = 'http://'+params[:gw_address]+':'+params[:gw_port].to_s+'/wifidog/auth?token='+token 
+      redirect_url = 'http://'+params[:gw_address]+':'+params[:gw_port].to_s+'/ctbrihuang/auth?token='+token 
       if !params[:platform].nil?
         render :text => redirect_url;
         return;

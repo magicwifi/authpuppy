@@ -1,0 +1,29 @@
+<div class="stats">
+<div class="number">
+  <strong id="following" class="stat">
+    <%= convert_conf_check @config.checkinterval %> 
+  </strong>
+    交互间隔
+</div>
+<div class="number">
+  <strong id="followers" class="stat">
+    <%= @config.httpmaxconn.to_s %>个 
+  </strong>
+    上联限制
+</div>
+</div>
+<div class="page-header"></div>
+<div class="stats">
+<div class="number">
+  <strong id="following" class="stat">
+    <%= convert_conf_auth @config.authinterval %> 
+  </strong>
+    认证间隔
+</div>
+<div class="number">
+  <strong id="followers" class="stat">
+    <%= @config.clienttimeout %>次 
+  </strong>
+    失效周期
+</div>
+</div>

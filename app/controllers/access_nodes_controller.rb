@@ -76,6 +76,19 @@ class AccessNodesController < ApplicationController
     @auth =@access.auth ||= Auth.first
   end
 
+  def init
+    @access = AccessNode.find(params[:id])
+    @config =@access.conf ||= Conf.first
+  end
+
+  def firewall
+    @access = AccessNode.find(params[:id])
+    @macs = @access.trusted_macs
+    @blackmac = @access.black_macs
+    @publicips = @access.public_ips
+  end
+
+
 
   def create
     @access_node = AccessNode.new(params[:access_node])

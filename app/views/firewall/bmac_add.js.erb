@@ -1,0 +1,2 @@
+$('#resultreply2').text('设置成功');
+$('#bmacadd').append('<div id="bmac<%= @mac.id %>" style="padding-bottom: 5px;" ><%= @mac.mac %> <%= link_to "删除", bmacdel_url(@mac.id),  :remote => true, :class=>"btn-link" %></div>')

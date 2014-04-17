@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140320141351) do
+ActiveRecord::Schema.define(:version => 20140416084552) do
 
   create_table "access_nodes", :force => true do |t|
     t.string   "name"
@@ -60,6 +60,23 @@ ActiveRecord::Schema.define(:version => 20140320141351) do
     t.integer  "access_node_id"
   end
 
+  create_table "black_macs", :force => true do |t|
+    t.integer  "access_node_id"
+    t.string   "mac"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
+  create_table "confs", :force => true do |t|
+    t.integer  "checkinterval",  :default => 60
+    t.integer  "authinterval",   :default => 120
+    t.integer  "clienttimeout",  :default => 5
+    t.integer  "httpmaxconn",    :default => 10
+    t.integer  "access_node_id"
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
+  end
+
   create_table "connections", :force => true do |t|
     t.string   "token"
     t.string   "ipaddr"
@@ -85,11 +102,25 @@ ActiveRecord::Schema.define(:version => 20140320141351) do
     t.datetime "updated_at",      :null => false
   end
 
+  create_table "public_ips", :force => true do |t|
+    t.integer  "access_node_id"
+    t.string   "publicip"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
   create_table "statuses", :force => true do |t|
     t.integer  "code"
     t.string   "message"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "trusted_macs", :force => true do |t|
+    t.integer  "access_node_id"
+    t.string   "mac"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
   end
 
 end

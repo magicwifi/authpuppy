@@ -1,0 +1,15 @@
+<div class="row">
+      <div class="span6 offset1">
+        <h3>请输入添加到白名单的公网IP地址</h3>
+        <p></p>
+        <%= form_tag "/ip_add", :remote => true do %>
+          <%= hidden_field_tag :id, @access.id %>
+  <div class="field">
+          <%= text_field_tag :ip, params[:ip] %>
+        </div>
+         <%= submit_tag "确认", :class => "btn btn-large btn-primary" %> 
+      <% end %>
+      <p></p>
+      <div id="resultreply3"></div>
+    </div>
+  </div>

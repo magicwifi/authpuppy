@@ -1,0 +1,23 @@
+<div class="row">
+      <div class="span6 offset1">
+        <h3>初始化配置</h3>
+        <p></p>
+<%= form_tag "/conf_update"  do %>
+  <%= hidden_field_tag "id", @access.id %>
+  <div class="field">
+    <%= label_tag "交互间隔" %>
+    <%= select_tag :checkinterval, "<option value='60'>1分钟</option><option value='120'>2分钟</option><option value='300'>5分钟</option><option value='600'>10分钟</option>".html_safe %>
+    <%= label_tag "访客认证间隔" %>
+    <%= select_tag :authinterval, "<option value='60'>1分钟</option><option value='120'>2分钟</option><option value='300'>5分钟</option><option value='600'>10分钟</option>".html_safe %>
+    <%= label_tag "访客失效周期" %>
+    <%= select_tag :clienttimeout, "<option value='5'>5次无响应</option><option value='10'>10次无响应</option><option value='20'>20次无响应</option>".html_safe %>
+    <%= label_tag "上联限制" %>
+    <%= select_tag :httpmaxconn, "<option value='5'>5</option><option value='10'>10</option><option value='20'>20</option>".html_safe %>
+  </div>
+  <%= submit_tag "确认更改", class: "btn btn-large btn-primary" %>
+<% end %>
+<p></p>
+<div id="resultreply2"></div>
+    </div>
+  </div>
+  </div>

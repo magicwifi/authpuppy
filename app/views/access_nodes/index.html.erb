@@ -10,7 +10,7 @@
     <% else %>
       <%= link_to image_tag("stop.png", size:"52x52" ) %>
     <% end %>
-    <%= link_to access.name, access %>  <div class="bnode"> <%= link_to "编辑节点", edit_access_node_url(access), {:class=>"btn btn-primary" } %> | <%= link_to " 高级设置", advance_url(access), {:class => "btn btn-warning" }%></div>
+    <%= link_to access.name, access %>  <div class="bnode"><%= link_to "防火墙设置", firewall_url(access), {:class=>"btn btn-danger" } %> |  <%= link_to "编辑节点", edit_access_node_url(access), {:class=>"btn btn-primary" } %> | <%= link_to " 高级设置", advance_url(access), {:class => "btn btn-warning" }%> | <%= link_to "初始设置", init_url(access), { :class => "btn btn-success" } %> </div>
     </li>
   <% end %>
   <%= will_paginate @access_nodes %>
