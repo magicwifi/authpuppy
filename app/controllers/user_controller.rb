@@ -105,7 +105,7 @@ class UserController < ApplicationController
       return
     end
     if !node.portal_url.blank?
-      redirect_to node.portal_url
+      redirect_to node.portal_url+"&mac="+params[:mac].to_s
     else
       redirect_to "http://www.baidu.com"
     end

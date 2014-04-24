@@ -1,3 +1,4 @@
+# encoding: utf-8
 class WifidogController < ApplicationController
   before_filter :garbage_collect
   
@@ -13,7 +14,7 @@ class WifidogController < ApplicationController
                 :last_seen => Time.now
       )
     end
-    
+   
     if node.configflag == true
       node.update_attributes( :configflag => false );
       render :text => "Pong:"
@@ -28,17 +29,18 @@ class WifidogController < ApplicationController
   end
 
   def fetchconf
-    str="";
+
     node = AccessNode.find_by_mac(params[:gw_id])
     if !node.nil?
-      node.update_attributes( :last_seen => Time.now )
+      str =""
+      node.update_attributes( :last_seen => Time.now, :configflag=>false )
     #render :text => "Conf:checkinterval=60&authinterval=120&clienttimeout=5&httpdmaxconn=5&trustedmaclist=98:d6:f7:8a:77:03&firewallrule=117.34.78.195+61.139.2.69"
       conf = node.conf
       if !conf.nil?
         str += "Conf:checkinterval="+conf.checkinterval.to_s+"&authinterval="+conf.authinterval.to_s+"&clienttimeout="+conf.clienttimeout.to_s+"&httpdmaxconn="+conf.httpmaxconn.to_s
       end
 
-      if !node.trusted_macs.nil?
+      if !node.trusted_macs.empty?
         str += "&trustedmaclist="
         macs = Array.new
         node.trusted_macs.each do |trusted|
@@ -47,7 +49,7 @@ class WifidogController < ApplicationController
         str += macs.join("+")
       end
 
-      if !node.public_ips.nil?
+      if !node.public_ips.empty?
         str += "&firewallrule="
         ips = Array.new
         node.public_ips.each do |ip|

@@ -55,8 +55,11 @@ class GuestController < ApplicationController
         end
         AccessNode.transaction do
           objArray.each do |object|
-            access = AccessNode.create!(object)
-            Auth.create!(auth_type:"radius",auth_device:false,access_node_id:access.id)
+            guest1 = GuestTransaction.new(object)
+            guest1.commit_bindurl
+            #access = AccessNode.create!(object)
+            #Auth.create!(auth_type:"radius",auth_device:false,access_node_id:access.id)
+            #Conf.create!(access_node_id:access.id)
           end
         end
       rescue Exception => e
@@ -64,7 +67,7 @@ class GuestController < ApplicationController
           format.html {render text: "Error102-Insert Error"}
           format.json {render :json => {:status => {:code=>102,:message=>"Insert Error"}}}
         end
-        return;
+        return
       end
       respond_to do |format|
         format.html {render text: "Success Insert"}
