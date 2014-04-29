@@ -8,7 +8,7 @@ class AccessNode < ActiveRecord::Base
   has_one :auth
   has_one :conf
 
-  attr_accessible :last_seen, :mac, :name, :portal_url, :redirect_url, :remote_addr, :sys_memfree, :sys_upload, :sys_uptime, :update_time, :configflag, :cmdline, :time_limit, :auth, :lat, :long
+  attr_accessible :last_seen, :mac, :name, :portal_url, :redirect_url, :remote_addr, :sys_memfree, :sys_upload, :sys_uptime, :update_time, :configflag, :cmdline, :time_limit, :auth, :lat, :long, :developer
   validates :name, presence: true, uniqueness:true
 
   VALID_MAC_REGEX = /^[0-9A-F]+$/
@@ -96,7 +96,6 @@ class AccessNode < ActiveRecord::Base
     if self.last_seen && Time.now-self.last_seen < 60
       return true;
     else
-      self.clean_all_conn
       return false;
     end 
   end

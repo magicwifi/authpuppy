@@ -2,7 +2,6 @@ class GuestTransaction
 
   def initialize(object)
     @object  = object
-    #logger.debug @object 
   end
 
   def commit_bindurl

@@ -10,8 +10,7 @@ class ApplicationController < ActionController::Base
 
       delete_unused_connections
       expire_old_connections
-      delete_unmac_connections
-      AccessNode.disconnect
+      #AccessNode.disconnect
     end
   end
 
@@ -24,12 +23,6 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def delete_unmac_connections
-    five_minutes_ago = Time.now - 5.minutes
-    for connection in Connection.find(:all, :conditions => ["mac is null and created_at < ?", five_minutes_ago])
-      connection.destroy
-    end
-  end
 
 
   def expire_old_connections

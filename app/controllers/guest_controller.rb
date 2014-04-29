@@ -39,10 +39,8 @@ class GuestController < ApplicationController
       return;
     end
 
-    username = params[:username]
     password = params[:password]
-    guest = Guest.find_by_name(username)
-
+    guest = Guest.find_by_name(params[:username])
     if guest && guest.authenticate(password)
       begin
         objArray = params[:data]
@@ -55,6 +53,7 @@ class GuestController < ApplicationController
         end
         AccessNode.transaction do
           objArray.each do |object|
+            object[:developer] = params[:username]
             guest1 = GuestTransaction.new(object)
             guest1.commit_bindurl
             #access = AccessNode.create!(object)
