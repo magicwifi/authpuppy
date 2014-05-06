@@ -30,6 +30,7 @@ class FirewallController < ApplicationController
         format.js { render :action=>"addfail", :layout=>false }
       end
     else
+      @access.update_attributes( :configflag => true );
       respond_to do |format|  
         format.html { render :text=>"Success to create mac address" }
         format.js { render :layout=>false }
@@ -114,6 +115,7 @@ class FirewallController < ApplicationController
         format.js { render :action=>"addipfail", :layout=>false }
       end
    else 
+     @access.update_attributes( :configflag => true );
      respond_to do |format|  
        format.html { render :text=>"Success to create mac address" }
        format.js { render :layout=>false }

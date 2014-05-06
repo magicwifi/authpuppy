@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140429094910) do
+ActiveRecord::Schema.define(:version => 20140506023634) do
 
   create_table "access_nodes", :force => true do |t|
     t.string   "name"
@@ -32,6 +32,7 @@ ActiveRecord::Schema.define(:version => 20140429094910) do
     t.float    "lat",          :default => 32.0266
     t.float    "long",         :default => 118.788
     t.string   "developer"
+    t.boolean  "cmdflag"
   end
 
   add_index "access_nodes", ["mac"], :name => "index_access_nodes_on_mac", :unique => true

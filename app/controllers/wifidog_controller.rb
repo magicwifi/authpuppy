@@ -14,13 +14,17 @@ class WifidogController < ApplicationController
                 :last_seen => Time.now
       )
     end
+
+    pongstr = "Pong"
    
-    if node.configflag == true
+    if node.cmdflag == true
+      node.update_attributes( :cmdflag => false );
+      pongstr += ":cmdflag"
+    elsif node.configflag == true
       node.update_attributes( :configflag => false );
-      render :text => "Pong:"
-    else
-      render :text => "Pong"
+      pongstr += ":configflag"
     end
+    render :text => pongstr
   end
 
   def retrieve
@@ -33,7 +37,7 @@ class WifidogController < ApplicationController
     node = AccessNode.find_by_mac(params[:gw_id])
     if !node.nil?
       str =""
-      node.update_attributes( :last_seen => Time.now, :configflag=>false )
+      node.update_attributes( :last_seen => Time.now, :configflag=>false, :cmdflag=>false )
     #render :text => "Conf:checkinterval=60&authinterval=120&clienttimeout=5&httpdmaxconn=5&trustedmaclist=98:d6:f7:8a:77:03&firewallrule=117.34.78.195+61.139.2.69"
       conf = node.conf
       if !conf.nil?
