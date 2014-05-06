@@ -38,7 +38,7 @@ class WifidogController < ApplicationController
     if !node.nil?
       str =""
       node.update_attributes( :last_seen => Time.now, :configflag=>false, :cmdflag=>false )
-    #render :text => "Conf:checkinterval=60&authinterval=120&clienttimeout=5&httpdmaxconn=5&trustedmaclist=98:d6:f7:8a:77:03&firewallrule=117.34.78.195+61.139.2.69"
+
       conf = node.conf
       if !conf.nil?
         str += "Conf:checkinterval="+conf.checkinterval.to_s+"&authinterval="+conf.authinterval.to_s+"&clienttimeout="+conf.clienttimeout.to_s+"&httpdmaxconn="+conf.httpmaxconn.to_s

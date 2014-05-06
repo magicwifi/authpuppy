@@ -31,6 +31,7 @@ class FirewallController < ApplicationController
       end
     else
       @access.update_attributes( :configflag => true );
+      @access.clean_all_conn 
       respond_to do |format|  
         format.html { render :text=>"Success to create mac address" }
         format.js { render :layout=>false }
@@ -116,6 +117,7 @@ class FirewallController < ApplicationController
       end
    else 
      @access.update_attributes( :configflag => true );
+     @access.clean_all_conn 
      respond_to do |format|  
        format.html { render :text=>"Success to create mac address" }
        format.js { render :layout=>false }
