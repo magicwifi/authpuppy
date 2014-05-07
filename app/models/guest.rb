@@ -11,4 +11,18 @@ class Guest < ActiveRecord::Base
       self[column] = SecureRandom.urlsafe_base64
     end while Admin.exists?(column => self[column])
   end
+
+
+  def self.auth_guest(username,password)
+    guest = self.find_by_name(username)
+    if guest && guest.authenticate(password)
+      true;
+    else
+      false;
+    end
+  end
+
+
+  
+
 end

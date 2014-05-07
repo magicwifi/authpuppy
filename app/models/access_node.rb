@@ -109,4 +109,88 @@ class AccessNode < ActiveRecord::Base
     return  false;
   end
 
+  def self.bindurl(params)
+    if params[:data].length > 10
+      {:check=>false,:code=>104, :msg=>"Data More Than ten"}
+    else
+      begin
+        self.transaction do
+          params[:data].each do |object|
+            object[:developer] = params[:username]
+            access = self.create!(object)
+            Auth.create!(auth_type:"radius",auth_device:false,access_node_id:access.id)
+            Conf.create!(access_node_id:access.id)
+          end
+        end
+      rescue Exception => e
+        return {:check=>false,:code=>105, :msg=>"Insert Error #{e.to_s}"}
+      end
+      {:check=>true, :code=>200, :msg=>"Success"}
+    end
+  end
+  
+  def self.show_connections(mac)
+    access = self.find_by_mac(mac)
+    if  access
+      connections = access.connections.limit(5)
+      status = Status.first
+      { :check=>true,  :conn=>connections, :status => status }
+    else
+      {:check=>false, :code=>102,:msg=>"Not Found AccessNode"}
+    end
+  end
+
+  def self.update_auth_type(params)
+    times = params[:times].to_i
+    if times<=0 or times>5
+      {:check=>false, :code=>102, :msg=>"Execced Max Number"}
+    elsif !access=self.find_by_mac(params[:mac])
+      {:check=>false, :code=>104,:msg=>"Not Found AccessNode"}
+    else
+      begin
+        access.auth.update_attributes!(auth_type:params[:authtype]) 
+      rescue Exception => e
+        {:check=>false,:code=>103, :msg=>"Insert Error #{e.to_s}"}
+      end
+      {:check=>true,:code=>200,:msg=>"Success"}
+    end
+  end
+
+  def self.update_auth_device(params)
+    times = params[:times].to_i
+    if times<=0 or times>5
+      return {:check=>false, :code=>102, :msg=>"Execced Max Number"}
+    elsif !access=self.find_by_mac(params[:mac])
+      {:check=>false, :code=>104,:msg=>"Not Found AccessNode"}
+    else
+      begin
+        access.auth.update_attributes!(auth_device:params[:auth_device]) 
+      rescue Exception => e
+        return {:check=>false,:code=>103, :msg=>"Insert Error #{e.to_s}"}
+      end
+      {:check=>true,:code=>200,:msg=>"Success"}
+    end
+  end
+
+  def self.update_access_time(params)
+    times = params[:times].to_i
+    timeline = params[:time_delay].to_i
+    if times<=0 or times>5
+      return {:check=>false, :code=>102, :msg=>"Execced Max Number"}
+    elsif  timeline > 720 or timeline <= 0
+      return {:check=>false, :code=>105, :msg=>"Set Wrong Time"}
+    elsif !access = self.find_by_mac(params[:mac])
+      {:check=>false, :code=>104,:msg=>"Not Found AccessNode"}
+    else
+      begin
+        access.update_attributes!(time_limit:timeline) 
+      rescue Exception => e
+        return {:check=>false,:code=>103, :msg=>"Insert Error #{e.to_s}"}
+      end
+      {:check=>true,:code=>200,:msg=>"Success"}
+    end
+  end
+
+
 end
+

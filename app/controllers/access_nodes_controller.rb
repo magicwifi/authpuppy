@@ -1,4 +1,4 @@
-# encoding: utf-8
+#a encoding: utf-8
 class AccessNodesController < ApplicationController
   before_filter :check_admin
   
