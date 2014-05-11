@@ -110,7 +110,7 @@ class AccessNode < ActiveRecord::Base
   end
 
   def self.bindurl(params)
-    if params[:data].length > 10
+    if params[:data].nil? || params[:data].length > 10
       {:check=>false,:code=>104, :msg=>"Data More Than ten"}
     else
       begin
@@ -144,11 +144,12 @@ class AccessNode < ActiveRecord::Base
     times = params[:times].to_i
     if times<=0 or times>5
       {:check=>false, :code=>102, :msg=>"Execced Max Number"}
-    elsif !access=self.find_by_mac(params[:mac])
+    elsif params[:authtype].nil? or !access=self.find_by_mac(params[:mac])
       {:check=>false, :code=>104,:msg=>"Not Found AccessNode"}
     else
+        authtype = params[:authtype].to_s  
       begin
-        access.auth.update_attributes!(auth_type:params[:authtype]) 
+        access.auth.update_attributes!(auth_type:authtype) 
       rescue Exception => e
         {:check=>false,:code=>103, :msg=>"Insert Error #{e.to_s}"}
       end
@@ -164,7 +165,7 @@ class AccessNode < ActiveRecord::Base
       {:check=>false, :code=>104,:msg=>"Not Found AccessNode"}
     else
       begin
-        access.auth.update_attributes!(auth_device:params[:auth_device]) 
+        access.auth.update_attributes!(auth_device:params[:authdevice]) 
       rescue Exception => e
         return {:check=>false,:code=>103, :msg=>"Insert Error #{e.to_s}"}
       end
