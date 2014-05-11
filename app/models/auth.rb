@@ -2,6 +2,14 @@ class Auth < ActiveRecord::Base
   attr_accessible :access_node_id, :auth_device, :auth_type
   belongs_to :access_node
 
+
+
+  def self.read_radius
+    return @req unless @req.nil?  
+    dict = Radiustar::Dictionary.new('/usr/share/freeradius/')
+    @req = Radiustar::Request.new('61.160.137.138', { :dict => dict })
+  end
+
   
   def check_device(device)
     unless auth_device
@@ -35,7 +43,6 @@ class Auth < ActiveRecord::Base
 
   def authenticate_radius(username, password)
 
-    dict = Radiustar::Dictionary.new('/usr/share/freeradius/')
 
     auth_custom_attr = {
       'NAS-IP-Address'  => '124.127.116.178',
@@ -44,7 +51,8 @@ class Auth < ActiveRecord::Base
       'User-Name' => username
     }
 
-    req = Radiustar::Request.new('61.160.137.138', { :dict => dict })
+    req = self.class.read_radius
+
     reply = req.authenticate(username, password, 'aruba',
                              auth_custom_attr)
    
@@ -55,5 +63,7 @@ class Auth < ActiveRecord::Base
     end
 
   end
+
+  @req = self.read_radius 
 
 end
