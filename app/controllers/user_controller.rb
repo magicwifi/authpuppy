@@ -24,7 +24,7 @@ class UserController < ApplicationController
 
 
   def authenticate
-    if params[:gw_id].nil? or params[:gw_address].nil? or params[:gw_port].nil?
+    if params[:gw_id].nil? or params[:gw_address].nil? or params[:gw_port].nil? or params[:logintype].nil?
       redirect_to "/404"
       return
     end 
@@ -38,6 +38,7 @@ class UserController < ApplicationController
     
     username = params[:username]
     password = params[:checkcode]
+    logintype = params[:logintype]
     
     device = request.user_agent.downcase
     phone = /(\(.+\)).+(\(.+\))/ 
@@ -51,12 +52,13 @@ class UserController < ApplicationController
 
 
     deviceflag = node.auth.check_device(userdevice)
+
     if !deviceflag
       redirect_to "/404"
       return
     end
 
-    authflag =   node.auth.authenticate username, password
+    authflag =   node.auth.authenticate username, password, logintype
 
     
     if !authflag 
@@ -64,9 +66,7 @@ class UserController < ApplicationController
       redirect_to redirect_url
       return
     else
-
       token=SecureRandom.urlsafe_base64(nil, false)
-
 
       if !node.time_limit.nil? and node.time_limit > 0
         login_connection = Connection.create!(:token => token,
@@ -95,7 +95,6 @@ class UserController < ApplicationController
       end
       redirect_to  redirect_url
     end
-
   end
 
   def portal
