@@ -34,6 +34,14 @@ class Connection < ActiveRecord::Base
       end
       unique_macs
     end
+
+    def show_by_date(node,date)
+      if node.nil?
+        paginate :per_page => 20, :page => 1, :conditions => ['used_on > ?', date], :order => 'used_on desc'
+      else
+        paginate :per_page => 20, :page => 1, :conditions => ['used_on > ? AND access_mac = ?', date, node.mac], :order => 'used_on desc'
+      end
+    end 
     
 
   end

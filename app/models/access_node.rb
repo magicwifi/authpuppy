@@ -132,7 +132,7 @@ class AccessNode < ActiveRecord::Base
   def self.show_connections(mac)
     access = self.find_by_mac(mac)
     if  access
-      connections = access.connections.limit(5)
+      connections = Connection.show_by_date(access,Time.now.to_date)
       status = Status.first
       { :check=>true,  :conn=>connections, :status => status }
     else

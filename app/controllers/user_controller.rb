@@ -5,10 +5,16 @@ class UserController < ApplicationController
 
     node = AccessNode.find_by_mac(params[:gw_id]) 
 
+    if node.nil?
+      redirect_to "http://218.94.58.242"
+      return
+    end
+
     if node.nil? or node.banned_mac? params[:mac] 
       redirect_to "/404"
       return
     end
+
     if !node.redirect_url.blank?
       redirect_url = node.redirect_url+"&gw_address="+params[:gw_address].to_s+"&gw_port="+params[:gw_port].to_s+"&gw_id="+params[:gw_id].to_s+"&public_ip=124.127.116.178"+"&mac="+params[:mac].to_s
       redirect_to redirect_url
@@ -83,7 +89,7 @@ class UserController < ApplicationController
                                               :access_mac => params[:gw_id],
                                               :device => userdevice,
                                               :access_node_id => node.id,
-                                              :expired_on => Time.now+5.minutes,
+                                              :expired_on => Time.now+30.minutes,
                                               :portal_url => params[:url] 
                                              )
       end
