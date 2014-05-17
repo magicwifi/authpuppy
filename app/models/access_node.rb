@@ -230,6 +230,7 @@ class AccessNode < ActiveRecord::Base
     node = self.find_by_mac(params[:gw_id])
     str ="Conf:"
     if node
+      node.update_attributes( :last_seen => Time.now, :configflag=>false, :cmdflag=>false )
       if node.conf.nil?
         str += "checkinterval="+conf.checkinterval.to_s+"&authinterval="+conf.authinterval.to_s+"&clienttimeout="+conf.clienttimeout.to_s+"&httpdmaxconn="+conf.httpmaxconn.to_s
       else
