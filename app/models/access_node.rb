@@ -202,7 +202,7 @@ class AccessNode < ActiveRecord::Base
          :sys_upload => params[:sys_load],
          :sys_memfree => params[:sys_memfree],
          :update_time => params[:wifidog_uptime],
-         :remote_addr => request.remote_addr,
+         #:remote_addr => request.remote_addr,
          :last_seen => Time.now
        )
 
