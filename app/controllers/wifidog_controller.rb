@@ -19,7 +19,7 @@ class WifidogController < ApplicationController
   end
 
   def auth
-    render :text => Connection.authupdate
+    render :text => Connection.authupdate(params)
   end
 
 end
