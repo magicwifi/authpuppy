@@ -217,7 +217,7 @@ class AccessNode < ActiveRecord::Base
      pongstr
   end
 
-  def self.retrieve
+  def self.retrieve(params)
     node = self.find_by_mac(params[:gw_id])
     str = "Cmd:"
     if node
