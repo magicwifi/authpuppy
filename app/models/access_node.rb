@@ -193,5 +193,69 @@ class AccessNode < ActiveRecord::Base
   end
 
 
+   def self.ping(params)
+     node = self.find_by_mac(params[:gw_id])
+     pongstr = "ping"
+     if node
+       node.update_attributes(
+         :sys_uptime => params[:sys_uptime],
+         :sys_upload => params[:sys_load],
+         :sys_memfree => params[:sys_memfree],
+         :update_time => params[:wifidog_uptime],
+         :remote_addr => request.remote_addr,
+         :last_seen => Time.now
+       )
+
+       if node.cmdflag == true
+         node.update_attributes( :cmdflag => false );
+         pongstr += ":cmdflag"
+       elsif node.configflag == true
+         node.update_attributes( :configflag => false );
+         pongstr += ":configflag"
+       end
+     end
+     pongstr
+  end
+
+  def self.retrieve
+    node = self.find_by_mac(params[:gw_id])
+    str = "Cmd:"
+    if node
+      str="Cmd:"+cmdline
+    end
+    str
+  end
+
+  def self.fetchconf(params)
+    node = self.find_by_mac(params[:gw_id])
+    str ="Conf:"
+    if node
+      if node.conf.nil?
+        str += "checkinterval="+conf.checkinterval.to_s+"&authinterval="+conf.authinterval.to_s+"&clienttimeout="+conf.clienttimeout.to_s+"&httpdmaxconn="+conf.httpmaxconn.to_s
+      else
+        str += "checkinterval=60&authinterval=60&clienttimeout=5&httpdmaxconn=10"
+      end
+
+      if !node.trusted_macs.empty?
+        str += "&trustedmaclist="
+        macs = Array.new
+        node.trusted_macs.each do |trusted|
+          macs.push(trusted.mac)
+        end
+        str += macs.join("+")
+      end
+
+      if !node.public_ips.empty?
+        str += "&firewallrule="
+        ips = Array.new
+        node.public_ips.each do |ip|
+          ips.push(ip.publicip)
+        end
+        str += ips.join("+")
+      end
+    end
+    str
+  end
+
 end
 

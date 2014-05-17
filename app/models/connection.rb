@@ -64,5 +64,45 @@ class Connection < ActiveRecord::Base
     self.update_attribute("used_on", Time.now)
   end
 
+  def self.authupdate(params) 
+    auth = 0
+    if !connection = self.find_by_token(params[:token])
+      logger.info "Invalid token: #{params[:token]}"
+    else 
+      case params[:stage]
+      when 'login'
+        if connection.expired? or connection.used?
+          logger.info "Tried to login with used or expired token: #{params[:token]}"
+        else
+          connection.update_attributes({
+            :mac => params[:mac],
+            :ipaddr => params[:ip],
+            :incoming => params[:incoming],
+            :outgoing => params[:outgoing],
+            :used_on => Time.now
+          })                        
+          auth = 1
+        end
+      when 'counters'
+        if !connection.expired?
+          auth = 1
+          connection.update_attributes({
+            :mac => params[:mac],
+            :ipaddr => params[:ip],
+            :incoming => params[:incoming],
+            :outgoing => params[:outgoing]
+          })                        
+          end
+      when 'logout'
+        logger.info "Logging out: #{params[:token]}"
+        connection.expire!
+      else          
+        logger.info "Invalid stage: #{params[:stage]}"
+      end    
+    end
+    "Auth: #{auth}"
+  end
+
+
 
 end

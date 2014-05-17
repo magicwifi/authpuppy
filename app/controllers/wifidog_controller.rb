@@ -1,72 +1,17 @@
 # encoding: utf-8
 class WifidogController < ApplicationController
   before_filter :garbage_collect
-  
-  def ping
-    node = AccessNode.find_by_mac(params[:gw_id])
-    if node
-      node.update_attributes(
-                :sys_uptime => params[:sys_uptime],
-                :sys_upload => params[:sys_load],
-                :sys_memfree => params[:sys_memfree],
-                :update_time => params[:wifidog_uptime],
-                :remote_addr => request.remote_addr,
-                :last_seen => Time.now
-      )
-    end
 
-    pongstr = "Pong"
-   
-    if node.cmdflag == true
-      node.update_attributes( :cmdflag => false );
-      pongstr += ":cmdflag"
-    elsif node.configflag == true
-      node.update_attributes( :configflag => false );
-      pongstr += ":configflag"
-    end
-    render :text => pongstr
+  def ping
+    render :text => AccessNode.ping(params)
   end
 
   def retrieve
-    node = AccessNode.find_by_mac(params[:gw_id])
-    render :text => "Cmd:"+node.cmdline
+    render :text => AccessNode.retrieve(params)
   end
 
   def fetchconf
-
-    node = AccessNode.find_by_mac(params[:gw_id])
-    if !node.nil?
-      str =""
-      node.update_attributes( :last_seen => Time.now, :configflag=>false, :cmdflag=>false )
-
-      conf = node.conf
-      if !conf.nil?
-        str += "Conf:checkinterval="+conf.checkinterval.to_s+"&authinterval="+conf.authinterval.to_s+"&clienttimeout="+conf.clienttimeout.to_s+"&httpdmaxconn="+conf.httpmaxconn.to_s
-      end
-
-      if !node.trusted_macs.empty?
-        str += "&trustedmaclist="
-        macs = Array.new
-        node.trusted_macs.each do |trusted|
-          macs.push(trusted.mac)
-        end
-        str += macs.join("+")
-      end
-
-      if !node.public_ips.empty?
-        str += "&firewallrule="
-        ips = Array.new
-        node.public_ips.each do |ip|
-          ips.push(ip.publicip)
-        end
-        str += ips.join("+")
-      end
-      
-      render :text => str
-    else
-      redirect_to "/404"
-      return;
-    end
+    render :text => AccessNode.fetchconf(params)
   end
 
   def denied
@@ -74,45 +19,7 @@ class WifidogController < ApplicationController
   end
 
   def auth
-    authupdate
+    render :text => Connection.authupdate
   end
 
-  def authupdate
-    auth = 0
-    if !connection = Connection.find_by_token(params[:token])
-      logger.info "Invalid token: #{params[:token]}"
-    else 
-      case params[:stage]
-      when 'login'
-        if connection.expired? or connection.used?
-          logger.info "Tried to login with used or expired token: #{params[:token]}"
-        else
-          connection.update_attributes({
-            :mac => params[:mac],
-            :ipaddr => params[:ip],
-            :incoming => params[:incoming],
-            :outgoing => params[:outgoing],
-            :used_on => Time.now
-          })                        
-          auth = 1
-        end
-      when 'counters'
-        if !connection.expired?
-          auth = 1
-          connection.update_attributes({
-            :mac => params[:mac],
-            :ipaddr => params[:ip],
-            :incoming => params[:incoming],
-            :outgoing => params[:outgoing]
-          })                        
-          end
-      when 'logout'
-        logger.info "Logging out: #{params[:token]}"
-        connection.expire!
-      else          
-        logger.info "Invalid stage: #{params[:stage]}"
-      end    
-    end
-    render :text => "Auth: #{auth}"
-  end
 end
