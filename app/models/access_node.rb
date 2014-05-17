@@ -195,7 +195,7 @@ class AccessNode < ActiveRecord::Base
 
    def self.ping(params)
      node = self.find_by_mac(params[:gw_id])
-     pongstr = "ping"
+     pongstr = "Pong"
      if node
        node.update_attributes(
          :sys_uptime => params[:sys_uptime],
