@@ -221,7 +221,7 @@ class AccessNode < ActiveRecord::Base
     node = self.find_by_mac(params[:gw_id])
     str = "Cmd:"
     if node
-      str="Cmd:"+cmdline
+      str="Cmd:"+node.cmdline
     end
     str
   end
