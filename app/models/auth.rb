@@ -34,11 +34,21 @@ class Auth < ActiveRecord::Base
   end
 
   def authenticate_device(device)
-    if device.include? "windows" or device.include? "mac" or device.include? "uknow"
+    phone = /(\(.+\)).+(\(.+\))/ 
+    m = phone.match(device)
+
+    if m  
+      userdevice = m[1]
+    else
+      userdevice = "uknown device"
+    end
+
+    if userdevice.include? "windows" or userdevice.include? "mac" or userdevice.include? "uknow"
         return false
     else
         return true
     end
+
   end
 
   def authenticate_radius(username, password)

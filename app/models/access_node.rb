@@ -259,19 +259,52 @@ class AccessNode < ActiveRecord::Base
   end
 
   def self.login(params)
-    node = AccessNode.find_by_mac(params[:gw_id]) 
-
+    node = self.find_by_mac(params[:gw_id]) 
     unless node
       redirect_url = "http://218.94.58.242"
     else
       if !node.redirect_url.blank?
         redirect_url = node.redirect_url+"&gw_address=#{params[:gw_address]}&gw_port=#{params[:gw_port]}&gw_id=#{params[:gw_id]}&public_ip=124.127.116.178&mac=#{params[:mac]}"
       end
-        redirect_url ||= "http://218.94.58.242/xweicms/ctwifi/template/food/logintest.jsp?apid=68&gw_address=#{params[:gw_address]}&gw_port=#{params[:gw_port]}&gw_id=#{params[:gw_id]}&public_ip=124.127.116.178&mac=#{params[:mac]}"
-
+      redirect_url ||= "/404"
     end
   end
 
+  def self.authenticate(params)
+    node = self.find_by_mac(params[:gw_id])
+    device = request.user_agent.downcase
+    if node.nil? or  params[:gw_id].nil? or params[:gw_address].nil? or params[:gw_port].nil? or params[:logintype].nil? or !node.auth.check_device(device)
+      redirect_url = "/404"
+    else
+      unless node.auth.authenticate params[:username],params[:checkcode], params[:logintype]
+
+        redirect_url = node.redirect_url+"&gw_address=#{params[:gw_address]}&gw_port=#{params[:gw_port]}&gw_id=#{params[:gw_id]}&public_ip=124.127.116.178&mac=#{params[:mac]}"
+      else
+        token=SecureRandom.urlsafe_base64(nil, false)
+        if !node.time_limit.nil? and node.time_limit > 0
+          login_connection = Connection.create!(:token => token,
+                                                :phonenum => username,
+                                                :access_mac => params[:gw_id],
+                                                :device => userdevice,
+                                                :access_node_id => node.id,
+                                                :expired_on => Time.now+node.time_limit.minutes,
+                                                :portal_url => params[:url]
+                                               )
+        else
+          login_connection = Connection.create!(:token => token,
+                                                :phonenum => username,
+                                                :access_mac => params[:gw_id],
+                                                :device => userdevice,
+                                                :access_node_id => node.id,
+                                                :expired_on => Time.now+30.minutes,
+                                                :portal_url => params[:url]
+                                               )
+        end
+
+        redirect_url ||= "http://#{params[:gw_address]}:#{params[:gw_port]}/ctbrihuang/auth?token=#{token}"
+      end
+    end
+  end
 
 end
 
