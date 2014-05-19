@@ -12,16 +12,7 @@ class UserController < ApplicationController
   end
 
   def portal
-    node = AccessNode.find_by_mac(params[:gw_id])
-    if node.nil?
-      redirect_to "/404"
-      return
-    end
-    if !node.portal_url.blank?
-      redirect_to node.portal_url+"&mac="+params[:mac].to_s
-    else
-      redirect_to "http://www.baidu.com"
-    end
+    redirect_to AccessNode.portal(params)
   end
 
   def logout

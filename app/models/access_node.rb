@@ -270,6 +270,18 @@ class AccessNode < ActiveRecord::Base
     end
   end
 
+  def self.portal(params[:gw_id])
+    node = self.find_by_mac(params[:gw_id])
+    unless node
+      redirect_url = "/404"
+    else
+      if !node.portal_url.blank?
+        redirect_url =  node.portal_url+"&mac="+params[:mac].to_s
+      end
+      redirect_url ||=  "http://www.baidu.com"
+    end
+  end
+
   def self.authenticate(params,device)
     node = self.find_by_mac(params[:gw_id])
     if node.nil? or  params[:gw_id].nil? or params[:gw_address].nil? or params[:gw_port].nil? or params[:logintype].nil? or !node.auth.check_device(device)
