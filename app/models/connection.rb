@@ -103,6 +103,14 @@ class Connection < ActiveRecord::Base
     "Auth: #{auth}"
   end
 
+  def self.logout(params)
+    connection = self.find_by_token(params[:token]);
+    if connection.nil? or !connection.expire!
+      false
+    else  
+      connection
+    end
+  end
 
 
 end

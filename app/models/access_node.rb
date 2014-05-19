@@ -264,13 +264,13 @@ class AccessNode < ActiveRecord::Base
       redirect_url = "http://218.94.58.242"
     else
       if !node.redirect_url.blank?
-        redirect_url = node.redirect_url+"&gw_address=#{params[:gw_address]}&gw_port=#{params[:gw_port]}&gw_id=#{params[:gw_id]}&public_ip=124.127.116.178&mac=#{params[:mac]}"
+        redirect_url = node.redirect_url+"&gw_address=#{params[:gw_address]}&gw_port=#{params[:gw_port]}&gw_id=#{params[:gw_id]}&public_ip=117.34.78.195&mac=#{params[:mac]}"
       end
       redirect_url ||= "/404"
     end
   end
 
-  def self.portal(params[:gw_id])
+  def self.portal(params)
     node = self.find_by_mac(params[:gw_id])
     unless node
       redirect_url = "/404"
@@ -289,7 +289,7 @@ class AccessNode < ActiveRecord::Base
     else
       unless node.auth.authenticate params[:username],params[:checkcode], params[:logintype]
 
-        redirect_url = node.redirect_url+"&gw_address=#{params[:gw_address]}&gw_port=#{params[:gw_port]}&gw_id=#{params[:gw_id]}&public_ip=124.127.116.178&mac=#{params[:mac]}"
+        redirect_url = node.redirect_url+"&gw_address=#{params[:gw_address]}&gw_port=#{params[:gw_port]}&gw_id=#{params[:gw_id]}&public_ip=117.34.78.195&mac=#{params[:mac]}"
       else
         token=SecureRandom.urlsafe_base64(nil, false)
         if !node.time_limit.nil? and node.time_limit > 0

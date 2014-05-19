@@ -15,19 +15,15 @@ class UserController < ApplicationController
     redirect_to AccessNode.portal(params)
   end
 
-  def logout
-    @connection = Connection.find_by_token(params[:token]);
-    if @connection.nil?
-      render :text=> "Empty Connection"
+  def logout(params)
+    @connection = Connection.logout(params);
+    if !@connection
+      render :text=> "Empty Offline"
     else  
-      if @connection.expire!
-        respond_to do |format|  
-          format.html { render :text=>"Success Offline" }
-          format.js { render :layout=>false }
-        end
-      else
-        render :text=> "Error Offilne"
-      end 
+      respond_to do |format|  
+        format.html { render :text=>"Success Offline" }
+        format.js { render :layout=>false }
+      end
     end
   end
 
