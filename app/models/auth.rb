@@ -21,7 +21,7 @@ class Auth < ActiveRecord::Base
 
 
   def authenticate(username, password,logintype)
-    if logintype == "pwd"
+    if auth_type == "radius"
         authenticate_radius(username, password)
     else
         authenticate_splash
