@@ -282,18 +282,18 @@ class AccessNode < ActiveRecord::Base
         token=SecureRandom.urlsafe_base64(nil, false)
         if !node.time_limit.nil? and node.time_limit > 0
           login_connection = Connection.create!(:token => token,
-                                                :phonenum => username,
+                                                :phonenum => params[:username],
                                                 :access_mac => params[:gw_id],
-                                                :device => userdevice,
+                                                :device => device,
                                                 :access_node_id => node.id,
                                                 :expired_on => Time.now+node.time_limit.minutes,
                                                 :portal_url => params[:url]
                                                )
         else
           login_connection = Connection.create!(:token => token,
-                                                :phonenum => username,
+                                                :phonenum => params[:username],
                                                 :access_mac => params[:gw_id],
-                                                :device => userdevice,
+                                                :device => device,
                                                 :access_node_id => node.id,
                                                 :expired_on => Time.now+30.minutes,
                                                 :portal_url => params[:url]
