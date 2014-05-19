@@ -7,7 +7,8 @@ class UserController < ApplicationController
   
 
   def authenticate
-      redirect_to  AccessNode.authenticate(params)
+      device = request.user_agent.downcase
+      redirect_to  AccessNode.authenticate(params,device)
   end
 
   def portal

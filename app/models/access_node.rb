@@ -270,9 +270,8 @@ class AccessNode < ActiveRecord::Base
     end
   end
 
-  def self.authenticate(params)
+  def self.authenticate(params,device)
     node = self.find_by_mac(params[:gw_id])
-    device = request.user_agent.downcase
     if node.nil? or  params[:gw_id].nil? or params[:gw_address].nil? or params[:gw_port].nil? or params[:logintype].nil? or !node.auth.check_device(device)
       redirect_url = "/404"
     else
