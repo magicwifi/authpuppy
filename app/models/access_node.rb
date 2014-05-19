@@ -258,5 +258,19 @@ class AccessNode < ActiveRecord::Base
     str
   end
 
+  def self.login(params)
+    node = AccessNode.find_by_mac(params[:gw_id]) 
+
+    unless node
+      redirect_url = "http://218.94.58.242"
+    else
+      if !node.redirect_url.blank?
+        redirect_url = node.redirect_url+"&gw_address=#{params[:gw_address]}&gw_port=#{params[:gw_port]}&gw_id=#{params[:gw_id]}&public_ip=124.127.116.178&mac=#{params[:mac]}"
+      end
+        redirect_url ||= "http://218.94.58.242/xweicms/ctwifi/template/food/logintest.jsp?apid=68&gw_address=#{params[:gw_address]}&gw_port=#{params[:gw_port]}&gw_id=#{params[:gw_id]}&public_ip=124.127.116.178&mac=#{params[:mac]}"
+
+    end
+
+
 end
 

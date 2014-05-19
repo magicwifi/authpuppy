@@ -2,26 +2,7 @@
 class UserController < ApplicationController
 
   def login
-
-    node = AccessNode.find_by_mac(params[:gw_id]) 
-
-    if node.nil?
-      redirect_to "http://218.94.58.242"
-      return
-    end
-
-    if node.nil? or node.banned_mac? params[:mac] 
-      redirect_to "/404"
-      return
-    end
-
-    if !node.redirect_url.blank?
-      redirect_url = node.redirect_url+"&gw_address="+params[:gw_address].to_s+"&gw_port="+params[:gw_port].to_s+"&gw_id="+params[:gw_id].to_s+"&public_ip=124.127.116.178"+"&mac="+params[:mac].to_s
-      redirect_to redirect_url
-    else
-      @userdevice = request.user_agent.downcase
-      render :action => "login", :layout => false
-    end
+    redirect_to AccessNode.login(params) 
   end 
   
   def loginsw
