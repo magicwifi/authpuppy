@@ -15,7 +15,7 @@ class UserController < ApplicationController
     redirect_to AccessNode.portal(params)
   end
 
-  def logout(params)
+  def logout
     @connection = Connection.logout(params);
     if !@connection
       render :text=> "Empty Offline"
