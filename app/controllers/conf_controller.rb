@@ -15,9 +15,9 @@ class ConfController < ApplicationController
     end
   
     if @access.conf.nil?
-      Conf.create(checkinterval:params[:checkinterval],authinterval:params[:authinterval],clienttimeout:params[:clienttimeout],httpmaxconn:params[:httpmaxconn],access_node_id => params[:id])
+      Conf.create(checkinterval:params[:checkinterval],authinterval:params[:authinterval],clienttimeout:params[:clienttimeout],httpmaxconn:params[:httpmaxconn],authserver:params[:authserver],access_node_id => params[:id])
     else
-      @access.conf.update_attributes(checkinterval:params[:checkinterval],authinterval:params[:authinterval],clienttimeout:params[:clienttimeout],httpmaxconn:params[:httpmaxconn])
+      @access.conf.update_attributes(checkinterval:params[:checkinterval],authinterval:params[:authinterval],clienttimeout:params[:clienttimeout],httpmaxconn:params[:httpmaxconn],authserver:params[:authserver])
     end
     @access.update_attributes(:cmdline=>"wdctl restart", :configflag =>true ) 
     flash[:notice] = "初始化成功，正在重启设备"

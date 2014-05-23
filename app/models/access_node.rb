@@ -234,6 +234,10 @@ class AccessNode < ActiveRecord::Base
       conf = node.conf
       if !conf.nil?
         str += "checkinterval="+conf.checkinterval.to_s+"&authinterval="+conf.authinterval.to_s+"&clienttimeout="+conf.clienttimeout.to_s+"&httpdmaxconn="+conf.httpmaxconn.to_s
+        if !conf.authserver.nil?
+          str += "&authserver=#{conf.authserver}"
+        end
+
       else
         str += "checkinterval=60&authinterval=60&clienttimeout=5&httpdmaxconn=10"
       end

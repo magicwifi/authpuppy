@@ -1,5 +1,5 @@
 class Conf < ActiveRecord::Base
-  attr_accessible :access_node_id, :authinterval, :checkinterval, :clienttimeout, :httpmaxconn
+  attr_accessible :access_node_id, :authinterval, :checkinterval, :clienttimeout, :httpmaxconn, :authserver
   belongs_to :access_node
 
   validates :authinterval, presence: true

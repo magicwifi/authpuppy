@@ -13,6 +13,8 @@
     <%= select_tag :clienttimeout, "<option value='5'>5次无响应</option><option value='10'>10次无响应</option><option value='20'>20次无响应</option>".html_safe %>
     <%= label_tag "上联限制" %>
     <%= select_tag :httpmaxconn, "<option value='5'>5</option><option value='10'>10</option><option value='20'>20</option>".html_safe %>
+    <%= label_tag "认证服务器" %>
+    <%= select_tag :authserver, "<option value='117.34.78.195'>117.34.78.195</option><option value='124.127.116.177'>124.127.116.177</option><option value='61.160.137.156'>61.160.137.156</option><option value='61.160.137.157'>61.160.137.157</option>".html_safe %>
   </div>
   <%= submit_tag "确认更改", class: "btn btn-large btn-primary" %>
 <% end %>
