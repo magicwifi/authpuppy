@@ -17,15 +17,12 @@ class GuestController < ApplicationController
     end
   end
 
-  def show_connections
-    check = AccessNode.show_connections(params[:mac])
-    if check[:check]
-      @connections, @status = check[:conn], check[:status]
-    else
-      back_code(check[:code],check[:msg]);
-    end
+  def add_nodes
+    result = HTTParty.post("http://124.127.116.177/bindurl.json",
+                                :body => params,
+                                :headers => { 'Content-Type' => 'application/json' } )
+    render :text => result
   end
-
 
   def self.define_component(name)
     define_method(name) {
@@ -37,10 +34,27 @@ class GuestController < ApplicationController
       end 
     }
   end
+
+  
+  def self.define_show(name)
+    define_method(name) {
+      check = AccessNode.send name, params
+      if check[:check]
+        @results, @status = check[:results], check[:status]
+      else
+        back_code(check[:code],check[:msg])
+      end 
+    }
+  end
+
   
   define_component  :update_auth_type
   define_component  :update_auth_device
   define_component  :update_access_time
   define_component  :bindurl
+  define_component  :update_portal_url
+  define_show  :show_nodes
+  define_show  :show_node
+  define_show  :show_connections
 
 end

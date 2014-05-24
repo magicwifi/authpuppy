@@ -20,7 +20,7 @@ class AccessNode < ActiveRecord::Base
       AccessNode.where("last_seen < ? and last_seen > ? ",Time.now - 60, Time.now - 600)
     end
 
-    def disconnect
+   def disconnect
       nodes = AccessNode.show_unlinked
       nodes.each do |node|
         node.clean_all_conn
@@ -55,6 +55,10 @@ class AccessNode < ActiveRecord::Base
     mac.gsub(/[:-]/, "").upcase
   end
 
+  def self.list_by_time(page)
+    paginate :per_page => 10, :page => page,  :order => 'last_seen desc'
+  end 
+
   def total_up
     bytes_up = 0
     connections = self.connections.find(:all, :conditions => [ 'created_at > ?', Time.now - 1.month ])
@@ -78,7 +82,7 @@ class AccessNode < ActiveRecord::Base
   end
 
   def running?
-    if self.last_seen && Time.now-self.last_seen < 60
+    if self.last_seen && Time.now-self.last_seen < 70
       return true;
     else
       return false;
@@ -129,14 +133,37 @@ class AccessNode < ActiveRecord::Base
     end
   end
   
-  def self.show_connections(mac)
-    access = self.find_by_mac(mac)
+  def self.show_connections(params)
+    access = self.find_by_mac(params[:mac])
     if  access
-      connections = Connection.show_by_date(access,Time.now.to_date)
+      connections = access.connections.limit(20)
       status = Status.first
-      { :check=>true,  :conn=>connections, :status => status }
+      { :check=>true,  :results=>connections, :status => status }
     else
       {:check=>false, :code=>102,:msg=>"Not Found AccessNode"}
+    end
+  end
+
+  def self.show_node(params)
+    access = self.find_by_mac(params[:mac])
+    if  access
+      status = Status.first
+      { :check=>true,  :results=>access, :status => status }
+    else
+      {:check=>false, :code=>102,:msg=>"Not Found AccessNode"}
+    end
+  end
+  
+  def self.show_nodes(params)
+    page = params[:page].to_i
+    if page > 0 
+      logger.info "success"
+      nodes = self.list_by_time(page)
+      status = Status.first
+      { :check=>true,  :results => nodes, :status => status }
+    else
+      logger.info "error"
+      {:check=>false, :code=>102,:msg=>"Page Number Error"}
     end
   end
 
@@ -150,6 +177,24 @@ class AccessNode < ActiveRecord::Base
         authtype = params[:authtype].to_s  
       begin
         access.auth.update_attributes!(auth_type:authtype) 
+      rescue Exception => e
+        {:check=>false,:code=>103, :msg=>"Insert Error #{e.to_s}"}
+      end
+      {:check=>true,:code=>200,:msg=>"Success"}
+    end
+  end
+
+  def self.update_portal_url(params)
+    if params[:redirect_url].nil? and params[:portal_url].nil?
+      {:check=>false, :code=>102, :msg=>"Not Found URL"}
+    elsif !access=self.find_by_mac(params[:mac])
+      {:check=>false, :code=>104,:msg=>"Not Found AccessNode"}
+    else
+        portal={}
+        portal[:redirect_url] = params[:redirect_url].to_s  if !params[:redirect_url].nil?
+        portal[:portal_url] = params[:portal_url].to_s  if !params[:portal_url].nil?
+      begin
+        access.update_attributes!(portal) 
       rescue Exception => e
         {:check=>false,:code=>103, :msg=>"Insert Error #{e.to_s}"}
       end
@@ -225,6 +270,7 @@ class AccessNode < ActiveRecord::Base
     end
     str
   end
+
 
   def self.fetchconf(params)
     node = self.find_by_mac(params[:gw_id])
