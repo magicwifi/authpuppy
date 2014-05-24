@@ -1,4 +1,6 @@
 # encoding: utf-8
+require 'httparty'
+
 class GuestController < ApplicationController
   before_filter :check_params
 
