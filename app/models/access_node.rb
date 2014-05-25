@@ -7,6 +7,7 @@ class AccessNode < ActiveRecord::Base
   has_many :online_connections, :class_name => "Connection", :conditions => "used_on is not null and (expired_on is null or expired_on > NOW())"
   has_one :auth
   has_one :conf
+  has_one :authserver
 
   attr_accessible :last_seen, :mac, :name, :portal_url, :redirect_url, :remote_addr, :sys_memfree, :sys_upload, :sys_uptime, :update_time, :cmdflag, :configflag, :cmdline, :time_limit, :auth, :lat, :long, :developer
   validates :name, presence: true, uniqueness:true
@@ -124,6 +125,27 @@ class AccessNode < ActiveRecord::Base
             access = self.create!(object)
             Auth.create!(auth_type:"radius",auth_device:false,access_node_id:access.id)
             Conf.create!(access_node_id:access.id)
+          end
+        end
+      rescue Exception => e
+        return {:check=>false,:code=>105, :msg=>"Insert Error #{e.to_s}"}
+      end
+      {:check=>true, :code=>200, :msg=>"Success"}
+    end
+  end
+
+  def self.createnode(params,ipaddr)
+    if params[:data].nil? || params[:data].length > 10
+      {:check=>false,:code=>104, :msg=>"Data More Than ten"}
+    else
+      begin
+        self.transaction do
+          params[:data].each do |object|
+            object[:developer] = params[:username]
+            access = self.create!(object)
+            Auth.create!(auth_type:"radius",auth_device:false,access_node_id:access.id)
+            Conf.create!(access_node_id:access.id)
+            Authserver.create!(access_node_id:access.id,ipaddr:ipaddr)
           end
         end
       rescue Exception => e
@@ -280,9 +302,6 @@ class AccessNode < ActiveRecord::Base
       conf = node.conf
       if !conf.nil?
         str += "checkinterval="+conf.checkinterval.to_s+"&authinterval="+conf.authinterval.to_s+"&clienttimeout="+conf.clienttimeout.to_s+"&httpdmaxconn="+conf.httpmaxconn.to_s
-        if !conf.authserver.nil?
-          str += "&authserver=#{conf.authserver}"
-        end
 
       else
         str += "checkinterval=60&authinterval=60&clienttimeout=5&httpdmaxconn=10"
@@ -305,6 +324,10 @@ class AccessNode < ActiveRecord::Base
         end
         str += ips.join("+")
       end
+    end
+
+    if !node.authserver.nil?
+      str += "&authserver=#{node.authserver.ipaddr}"
     end
     str
   end

@@ -20,10 +20,18 @@ class GuestController < ApplicationController
   end
 
   def add_nodes
-    result = HTTParty.post("http://124.127.116.177/bindurl.json",
-                                :body => params,
-                                :headers => { 'Content-Type' => 'application/json' } )
-    render :text => result
+    server =["124.127.116.177","61.160.137.156","61.160.137.157"]
+    result = HTTParty.post("http://#{server[0]}/bindurl.json",
+                          :body => params.to_json,
+                            :headers => { 'Content-Type' => 'application/json' }
+                         )
+    
+    if result["status"]["code"] == 200
+      check =  AccessNode.createnode  params, server[0]
+      back_code(check[:code],check[:msg])
+    else
+       render :json => result
+    end
   end
 
   def self.define_component(name)
