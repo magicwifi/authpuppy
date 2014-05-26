@@ -143,7 +143,8 @@ class AccessNode < ActiveRecord::Base
           params[:data].each do |object|
             object[:developer] = params[:username]
             access = self.create!(object)
-            Auth.create!(auth_type:"radius",auth_device:false,access_node_id:access.id)
+            PublicIp.create!(publicip:"218.94.58.242",access_node_id:access.id);
+            #Auth.create!(auth_type:"radius",auth_device:false,access_node_id:access.id)
             Conf.create!(access_node_id:access.id)
             Authserver.create!(access_node_id:access.id,ipaddr:ipaddr)
           end
@@ -151,7 +152,7 @@ class AccessNode < ActiveRecord::Base
       rescue Exception => e
         return {:check=>false,:code=>105, :msg=>"Insert Error #{e.to_s}"}
       end
-      {:check=>true, :code=>200, :msg=>"Success"}
+      {:check=>true, :code=>200, :msg=>"#{ipaddr}"}
     end
   end
   

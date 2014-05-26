@@ -26,7 +26,7 @@ class GuestController < ApplicationController
                             :headers => { 'Content-Type' => 'application/json' }
                          )
     
-    if result["status"]["code"] == 200
+    if result["status"]["code"] == "200"
       check =  AccessNode.createnode  params, server[0]
       back_code(check[:code],check[:msg])
     else
